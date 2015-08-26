@@ -1,0 +1,12 @@
+[
+  {
+    "id": "debug_floor",
+    "symbol": "`",
+    "color": "orange"
+  },
+  {
+    "id": "dirt",
+    "symbol": ".",
+    "color": "brown"
+  }
+]

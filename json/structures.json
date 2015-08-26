@@ -1,0 +1,14 @@
+[
+  {
+    "id": "debug_structure",
+    "symbol": "`",
+    "color": "orange",
+    "opaque": "true"
+  },
+  {
+    "id": "wall",
+    "symbol": "#",
+    "color": "white",
+    "opaque": "true"
+  }
+]
