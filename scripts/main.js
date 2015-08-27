@@ -145,35 +145,37 @@ vision();
 
 
 function vision(){
-    var leftX, topY;
+    var leftX, botY;
 
     if(player.xPos - Math.floor(viewWidth/2) < 0)
     leftX = 0;
-    else if(player.xPos + Math.floor(viewWidth/2) > mapWidth)
+    else if(player.xPos + Math.floor(viewWidth/2) >= mapWidth)
     leftX = mapWidth - viewWidth;
     else
     leftX = player.xPos - Math.floor(viewWidth/2);
 
 
-    if(player.yPos - Math.floor(viewHeight/2) < 0)
-        topY = 0;
+    if(player.yPos - Math.floor(viewHeight/2) <= 0)
+        botY = 0;
     else if(player.yPos + Math.floor(viewHeight/2) >= mapHeight)
-        topY = mapHeight - viewHeight -1 ;
+        botY = mapHeight - viewHeight -1 ;
     else
-        topY = player.yPos - Math.floor(viewHeight/2) -1;
-    //if(player.xPos - Math.floor(viewWidth/2) < 0)
-    //leftX = player.xPos - Math.floor(viewWidth/2);
-    //else
-    //leftX = 0;
-    //if(player.yPos - Math.floor(viewHeight/2) > 0)
-    //topY =  player.yPos - Math.floor(viewHeight/2);
-    //else
-    //topY = 0;
+        botY = player.yPos - Math.floor(viewHeight/2) -1;
     var buffer = "";
-    for(var y=topY+viewHeight; y>=topY;y--){
+    var prevColor = "";
+    for(var y=botY+viewHeight; y>=botY;y--){
         for(var x=leftX; x<leftX+viewWidth; x++){
-            buffer +="<div style=\"display:inline;color:" + map[x][y].peek().color + "\">" + map[x][y].peek().symbol +"</div>";
+            if(map[x][y].peek().color == prevColor){
+                buffer += map[x][y].peek().symbol;
             }
+            else{
+                if (prevColor != ""){
+                    buffer += "</div>";
+                }
+                buffer +=  "<div style=\"display:inline;color:" + map[x][y].peek().color + "\">" + map[x][y].peek().symbol;
+                prevColor = map[x][y].peek().color;
+            }
+        }
         buffer += "<br>";
     }
     document.getElementById(entityViewerName).innerHTML = buffer;
