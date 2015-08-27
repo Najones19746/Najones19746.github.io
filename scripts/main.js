@@ -83,12 +83,12 @@ if(map[player.xPos+xChange][player.yPos+yChange].peek().type == "structure" && !
 
 }
 
-function getObject(collection, key, value){
+function getObjectById(collection, value){
     for(var i = 0; i < collection.length; i++){
-        if (collection[i].key = value)
+        if (collection[i].id == value)
             return collection[i];
     }
-    return;
+    return collection[0];
 }
 
 function checkFlag(flag, ob){
@@ -125,8 +125,8 @@ function init() {
     visible = [viewWidth][viewHeight];
     player.xPos = mapWidth/2;
     player.yPos = mapHeight/2;
-    var dirt =  getObject(groundObjects, "id", "dirt");
-    var wall = getObject(structureObjects, "id", "wall");
+    var dirt =  getObjectById(groundObjects, "dirt");
+    var wall = getObjectById(structureObjects, "wall");
     for (var i = 0; i < 250; i++) {
         map[i]= new Array();
         for (var j = 0; j < 250; j++) {
@@ -139,12 +139,17 @@ function init() {
     map[0][249].push(wall);
     map[249][0].push(wall);
     map[249][249].push(wall);
-    map[130][130].push(wall);
+    //map[130][130].push(wall);
     for(i = 1; i < 249; i++){
         map[i][0].push(wall);
         map[i][249].push(wall);
         map[0][i].push(wall);
         map[249][i].push(wall);
+    }
+    for(i=10; i < 240; i+=10){
+        for(j=10; j < 240; j+=10){
+            map[i][j].push(getObjectById(structureObjects, "debug_wall"));
+        }
     }
 
 vision();
