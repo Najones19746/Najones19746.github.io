@@ -10,7 +10,7 @@ var groundObjects;
 var itemObjects;
 var monsterObjects;
 var structureObjects;
-var player = {xPos:0, yPos: 0, symbol: "@"};
+var player = {xPos:0, yPos: 0, symbol: "@", color: "green"};
 var menuState = false;
 const viewWidth = 51;
 const viewHeight = 31;
@@ -157,10 +157,10 @@ function vision(){
 
     if(player.yPos - Math.floor(viewHeight/2) < 0)
         topY = 0;
-    else if(player.yPos + Math.floor(viewHeight/2) > mapHeight)
+    else if(player.yPos + Math.floor(viewHeight/2) >= mapHeight)
         topY = mapHeight - viewHeight -1 ;
     else
-        topY = player.yPos - Math.floor(viewHeight/2);
+        topY = player.yPos - Math.floor(viewHeight/2) -1;
     //if(player.xPos - Math.floor(viewWidth/2) < 0)
     //leftX = player.xPos - Math.floor(viewWidth/2);
     //else
@@ -172,7 +172,7 @@ function vision(){
     var buffer = "";
     for(var y=topY+viewHeight; y>=topY;y--){
         for(var x=leftX; x<leftX+viewWidth; x++){
-            buffer += map[x][y].peek().symbol;
+            buffer +="<div style=\"display:inline;color:" + map[x][y].peek().color + "\">" + map[x][y].peek().symbol +"</div>";
             }
         buffer += "<br>";
     }
