@@ -3,14 +3,16 @@
     "id": "debug_structure",
     "symbol": "`",
     "color": "orange",
-    "opaque": "true",
+    "opaque": true,
+    "unpathable":true,
     "flags": [""]
   },
   {
     "id": "wall",
     "symbol": "#",
     "color": "white",
-    "opaque": "true",
+    "opaque": true,
+    "unpathable": true,
     "flags": [""]
   }
 ]

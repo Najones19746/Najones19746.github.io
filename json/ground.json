@@ -2,11 +2,13 @@
   {
     "id": "debug_floor",
     "symbol": "`",
-    "color": "orange"
+    "color": "orange",
+    "flags":[""]
   },
   {
     "id": "dirt",
     "symbol": ".",
-    "color": "brown"
+    "color": "brown",
+    "flags":[""]
   }
 ]

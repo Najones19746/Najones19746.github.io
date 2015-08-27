@@ -30,7 +30,6 @@ document.addEventListener("keydown", function(e) {
 
 function move(e){
     var keyValue = e.keyCode - 96;
-    map[player.xPos][player.yPos].pop();
     var xChange = 0;
     var yChange = 0;
     switch (keyValue) {
@@ -68,10 +67,19 @@ function move(e){
         default:
             break;
     }
-    if(map[player.xPos+xChange][player.yPos+yChange].peek.hasOwnProperty("pathable")) {
+
+if(map[player.xPos+xChange][player.yPos+yChange].peek().unpathable)
+    {
+        vision();
+        console.log("well fuck");
+        return 0;
+    }
+        map[player.xPos][player.yPos].pop();
+        player.xPos += xChange;
+        player.yPos += yChange;
         map[player.xPos][player.yPos].push(player);
         vision();
-    }
+
 
 }
 
@@ -128,8 +136,14 @@ vision();
 
 
 function vision(){
-    var leftX = player.xPos - Math.floor(viewWidth/2);
-    var topY =  player.yPos - Math.floor(viewHeight/2);
+    var leftX, topY;
+
+    if(player.xPos - Math.floor(viewWidth/2) > 0)
+    leftX = player.xPos - Math.floor(viewWidth/2);
+    else
+    leftX = 0
+    if(player.xPos - Math.floor(viewWidth/2) > 0)
+    topY =  player.yPos - Math.floor(viewHeight/2);
     var buffer = "";
     for(var y=topY+viewHeight; y>topY;y--){
         for(var x=leftX; x<leftX+viewWidth; x++){
