@@ -1,0 +1,16 @@
+[
+  {
+    "type": "monster",
+    "id": "debug_monster",
+    "symbol": "M",
+    "color": "pink",
+    "flags": [""]
+  },
+  {
+    "type": "monster",
+    "id": "lion",
+    "symbol": "L",
+    "color": "yellow",
+    "flags": [""]
+  }
+]
