@@ -1,17 +1,17 @@
 [
   {
+    "type": "structure",
     "id": "debug_structure",
-    "symbol": "`",
-    "color": "orange",
-    "opaque": true,
+    "symbol": "#",
+    "color": "pink",
     "unpathable":true,
     "flags": [""]
   },
   {
+    "type": "structure",
     "id": "wall",
     "symbol": "#",
     "color": "white",
-    "opaque": true,
     "unpathable": true,
     "flags": [""]
   }
