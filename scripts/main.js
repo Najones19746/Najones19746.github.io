@@ -68,7 +68,7 @@ function move(e){
             break;
     }
 
-if(map[player.xPos+xChange][player.yPos+yChange].peek().unpathable)
+if(map[player.xPos+xChange][player.yPos+yChange].peek().type == "structure" && !checkFlag("pathable", map[player.xPos+xChange][player.yPos+yChange].peek()))
     {
         vision();
         console.log("well fuck");
@@ -82,6 +82,15 @@ if(map[player.xPos+xChange][player.yPos+yChange].peek().unpathable)
 
 
 }
+
+function checkFlag(flag, ob){
+    for (var prop in ob.flag){
+        if (prop == flag)
+            return true;
+    }
+    return false;
+}
+
 
 function init() {
 
