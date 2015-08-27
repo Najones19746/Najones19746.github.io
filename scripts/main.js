@@ -11,60 +11,69 @@ var itemObjects;
 var monsterObjects;
 var structureObjects;
 var player = {xPos:0, yPos: 0, symbol: "@"};
+var menuState = false;
 const viewWidth = 51;
 const viewHeight = 31;
 const mapWidth = 250;
 const mapHeight = 250;
 const entityViewerName = "entities";
 
-Array.prototype.last = function() {
+Array.prototype.peek = function() {
     return this[this.length-1];
-}
+};
 
 
 document.addEventListener("keydown", function(e) {
+    if (menuState == false)
+        move(e);
+});
+
+function move(e){
     var keyValue = e.keyCode - 96;
     map[player.xPos][player.yPos].pop();
-
+    var xChange = 0;
+    var yChange = 0;
     switch (keyValue) {
         case 1:
 
-            player.xPos -= 1;
-            player.yPos -= 1;
+            xChange -= 1;
+            yChange -= 1;
             break;
         case 2:
-            player.yPos -= 1;
+            yChange -= 1;
             break;
         case 3:
-            player.xPos += 1;
-            player.yPos -= 1;
+            xChange += 1;
+            yChange -= 1;
             break;
         case 4:
-            player.xPos -= 1;
+            xChange -= 1;
             break;
         case 5:
             break;
         case 6:
-            player.xPos += 1;
+            xChange += 1;
             break;
         case 7:
-            player.xPos -= 1;
-            player.yPos += 1;
+            xChange -= 1;
+            yChange += 1;
             break;
         case 8:
-            player.yPos += 1;
+            yChange += 1;
             break;
         case 9:
-            player.xPos += 1;
-            player.yPos += 1;
+            xChange += 1;
+            yChange += 1;
             break;
         default:
             break;
     }
-    map[player.xPos][player.yPos].push(player);
-    vision();
-});
+    if(map[player.xPos+xChange][player.yPos+yChange].peek.hasOwnProperty("pathable")) {
+        map[player.xPos][player.yPos].push(player);
+        vision();
+    }
 
+}
 
 function init() {
 
@@ -122,9 +131,9 @@ function vision(){
     var leftX = player.xPos - Math.floor(viewWidth/2);
     var topY =  player.yPos - Math.floor(viewHeight/2);
     var buffer = "";
-    for(y=topY+viewHeight; y>topY;y--){
-        for(x=leftX; x<leftX+viewWidth; x++){
-            buffer += map[x][y].last().symbol;
+    for(var y=topY+viewHeight; y>topY;y--){
+        for(var x=leftX; x<leftX+viewWidth; x++){
+            buffer += map[x][y].peek().symbol;
             }
         buffer += "<br>";
     }
