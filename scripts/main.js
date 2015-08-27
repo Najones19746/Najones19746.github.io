@@ -131,11 +131,11 @@ function init() {
     map[249][0].push(structureObjects[1]);
     map[249][249].push(structureObjects[1]);
     map[130][130].push(structureObjects[1]);
-    for(i = 1; i < 250; i++){
-        map[i][1].push(structureObjects[1]);
-        map[i][248].push(structureObjects[1]);
-        map[1][i].push(structureObjects[1]);
-        map[248][i].push(structureObjects[1]);
+    for(i = 1; i < 249; i++){
+        map[i][0].push(structureObjects[1]);
+        map[i][249].push(structureObjects[1]);
+        map[0][i].push(structureObjects[1]);
+        map[249][i].push(structureObjects[1]);
     }
 
 vision();
@@ -147,14 +147,30 @@ vision();
 function vision(){
     var leftX, topY;
 
-    if(player.xPos - Math.floor(viewWidth/2) > 0)
-    leftX = player.xPos - Math.floor(viewWidth/2);
+    if(player.xPos - Math.floor(viewWidth/2) < 0)
+    leftX = 0;
+    else if(player.xPos + Math.floor(viewWidth/2) > mapWidth)
+    leftX = mapWidth - viewWidth;
     else
-    leftX = 0
-    if(player.xPos - Math.floor(viewWidth/2) > 0)
-    topY =  player.yPos - Math.floor(viewHeight/2);
+    leftX = player.xPos - Math.floor(viewWidth/2);
+
+
+    if(player.yPos - Math.floor(viewHeight/2) < 0)
+        topY = 0;
+    else if(player.yPos + Math.floor(viewHeight/2) > mapHeight)
+        topY = mapHeight - viewHeight -1 ;
+    else
+        topY = player.yPos - Math.floor(viewHeight/2);
+    //if(player.xPos - Math.floor(viewWidth/2) < 0)
+    //leftX = player.xPos - Math.floor(viewWidth/2);
+    //else
+    //leftX = 0;
+    //if(player.yPos - Math.floor(viewHeight/2) > 0)
+    //topY =  player.yPos - Math.floor(viewHeight/2);
+    //else
+    //topY = 0;
     var buffer = "";
-    for(var y=topY+viewHeight; y>topY;y--){
+    for(var y=topY+viewHeight; y>=topY;y--){
         for(var x=leftX; x<leftX+viewWidth; x++){
             buffer += map[x][y].peek().symbol;
             }
