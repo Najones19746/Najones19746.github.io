@@ -3,7 +3,7 @@
  */
 
 
-
+//Global variables
 var map = null;
 var visible = null;
 var groundObjects;
@@ -12,6 +12,8 @@ var monsterObjects;
 var structureObjects;
 var player = {xPos:0, yPos: 0, symbol: "@", color: "green"};
 var menuState = false;
+
+//Constants (move to separate file eventually)
 const viewWidth = 51;
 const viewHeight = 31;
 const mapWidth = 250;
@@ -24,43 +26,51 @@ Array.prototype.peek = function() {
 
 
 document.addEventListener("keydown", function(e) {
+
+    //If not in menu, move (only state as of now)
     if (menuState == false)
         move(e);
 });
 
 function move(e){
-    var keyValue = e.keyCode - 96;
+
+    //ONLY PASS KEYPAD OR ARROWS
+    var keyValue = e.keyCode;
+
     var xChange = 0;
     var yChange = 0;
     switch (keyValue) {
-        case 1:
-
+        case 97:
             xChange -= 1;
             yChange -= 1;
             break;
-        case 2:
+        case 40:
+        case 98:
             yChange -= 1;
             break;
-        case 3:
+        case 99:
             xChange += 1;
             yChange -= 1;
             break;
-        case 4:
+        case 37:
+        case 100:
             xChange -= 1;
             break;
-        case 5:
+        case 101:
             break;
-        case 6:
+        case 39:
+        case 102:
             xChange += 1;
             break;
-        case 7:
+        case 103:
             xChange -= 1;
             yChange += 1;
             break;
-        case 8:
+        case 38:
+        case 104:
             yChange += 1;
             break;
-        case 9:
+        case 105:
             xChange += 1;
             yChange += 1;
             break;
