@@ -13,12 +13,6 @@ var structureObjects;
 var player = {xPos:0, yPos: 0, symbol: "@", color: "green"};
 var menuState = false;
 
-//Constants (move to separate file eventually)
-const viewWidth = 51;
-const viewHeight = 31;
-const mapWidth = 250;
-const mapHeight = 250;
-const entityViewerName = "entities";
 
 Array.prototype.peek = function() {
     return this[this.length-1];
@@ -159,6 +153,8 @@ function init() {
     for(i=10; i < 240; i+=10){
         for(j=10; j < 240; j+=10){
             map[i][j].push(getObjectById(structureObjects, "debug_wall"));
+            map[i][j].visible = false;
+            map[i][j].lit = false;
         }
     }
 
