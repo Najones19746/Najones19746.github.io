@@ -5,7 +5,7 @@
     "symbol": "#",
     "color": "pink",
     "unpathable":true,
-    "flags": [""]
+    "flags": ["blocksSight"]
   },
   {
     "type": "structure",
@@ -13,6 +13,6 @@
     "symbol": "#",
     "color": "white",
     "unpathable": true,
-    "flags": [""]
+    "flags": ["blocksSight"]
   }
 ]

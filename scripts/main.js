@@ -10,7 +10,7 @@ var groundObjects;
 var itemObjects;
 var monsterObjects;
 var structureObjects;
-var player = {xPos:0, yPos: 0, symbol: "@", color: "green"};
+var player = {xPos:0, yPos: 0, symbol: "@", color: "green", type:"player"};
 var menuState = false;
 
 
@@ -33,6 +33,8 @@ function move(e){
 
     var xChange = 0;
     var yChange = 0;
+
+
     switch (keyValue) {
         case 97:
             xChange -= 1;
@@ -71,8 +73,9 @@ function move(e){
         default:
             break;
     }
-
-if(map[player.xPos+xChange][player.yPos+yChange].peek().type == "structure" && !checkFlag("pathable", map[player.xPos+xChange][player.yPos+yChange].peek()))
+    for(i = 0; i< 5; i++)
+        console.log(map[player.xPos + 2][player.yPos + i].lit )
+    if(map[player.xPos+xChange][player.yPos+yChange].peek().type == "structure" && !checkFlag("pathable", map[player.xPos+xChange][player.yPos+yChange].peek()))
     {
         vision();
         console.log("well fuck");
@@ -82,6 +85,8 @@ if(map[player.xPos+xChange][player.yPos+yChange].peek().type == "structure" && !
         player.xPos += xChange;
         player.yPos += yChange;
         map[player.xPos][player.yPos].push(player);
+
+
         vision();
 
 
@@ -129,6 +134,8 @@ function init() {
     visible = [viewWidth][viewHeight];
     player.xPos = mapWidth/2;
     player.yPos = mapHeight/2;
+
+
     var dirt =  getObjectById(groundObjects, "dirt");
     var wall = getObjectById(structureObjects, "wall");
     for (var i = 0; i < 250; i++) {
@@ -136,9 +143,14 @@ function init() {
         for (var j = 0; j < 250; j++) {
             map[i][j] = new Array();
             map[i][j].push(dirt);
+            map[i][j].lit = false;
+            map[i][j].unseen = true;
         }
     }
     map[player.xPos][player.yPos].push(player);
+    for(i = player.yPos - 5; i < player.yPos + 5; i++){
+        map[player.xPos +2][i].push(wall);
+    }
     map[0][0].push(wall);
     map[0][249].push(wall);
     map[249][0].push(wall);
@@ -155,9 +167,10 @@ function init() {
             map[i][j].push(getObjectById(structureObjects, "debug_wall"));
             map[i][j].visible = false;
             map[i][j].lit = false;
+            map[i][j].lastSymbol = null;
         }
     }
-
+    this.playerLight = new LightSource(player, 8);
 vision();
 }
 
@@ -165,6 +178,8 @@ vision();
 
 
 function vision(){
+    var playercopy = player;
+    this.playerLight.update(playercopy);
     var leftX, botY;
 
     if(player.xPos - Math.floor(viewWidth/2) < 0)
@@ -182,10 +197,25 @@ function vision(){
     else
         botY = player.yPos - Math.floor(viewHeight/2) -1;
     var buffer = "";
-    var prevColor = "";
+    var prevColor = null;
     for(var y=botY+viewHeight; y>=botY;y--){
         for(var x=leftX; x<leftX+viewWidth; x++){
-            if(map[x][y].peek().color == prevColor){
+            if(map[x][y].unseen){
+                buffer += " ";
+            }
+            else if(map[x][y].lit == false)
+            {
+
+                if (prevColor != "DarkSlateGray"){
+                    if (prevColor != null )
+                        buffer+="</div>";
+                    buffer += "<div style=\"display:inline;color:DarkSlateGray\">";
+                }
+                if(map[x][y].lastSymbol != null)
+                    buffer += map[x][y].lastSymbol;
+
+            }
+            else if(map[x][y].peek().color == prevColor){
                 buffer += map[x][y].peek().symbol;
             }
             else{
@@ -197,6 +227,8 @@ function vision(){
             }
         }
         buffer += "<br>";
+
+
     }
     document.getElementById(entityViewerName).innerHTML = buffer;
 }
