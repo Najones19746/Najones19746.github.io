@@ -10,8 +10,10 @@ var groundObjects;
 var itemObjects;
 var monsterObjects;
 var structureObjects;
-var player = {xPos:0, yPos: 0, symbol: "@", color: "green", type:"player"};
+var player = {xPos:125, yPos: 125, symbol: "@", color: "green", type:"player"};
+var playerLight = new LightSource(player, 8);
 var menuState = false;
+
 
 
 Array.prototype.peek = function() {
@@ -73,8 +75,7 @@ function move(e){
         default:
             break;
     }
-    for(i = 0; i< 5; i++)
-        console.log(map[player.xPos + 2][player.yPos + i].lit )
+
     if(map[player.xPos+xChange][player.yPos+yChange].peek().type == "structure" && !checkFlag("pathable", map[player.xPos+xChange][player.yPos+yChange].peek()))
     {
         vision();
@@ -132,9 +133,6 @@ function init() {
 
     map = [];
     visible = [viewWidth][viewHeight];
-    player.xPos = mapWidth/2;
-    player.yPos = mapHeight/2;
-
 
     var dirt =  getObjectById(groundObjects, "dirt");
     var wall = getObjectById(structureObjects, "wall");
@@ -170,7 +168,7 @@ function init() {
             map[i][j].lastSymbol = null;
         }
     }
-    this.playerLight = new LightSource(player, 8);
+
 vision();
 }
 
@@ -178,8 +176,7 @@ vision();
 
 
 function vision(){
-    var playercopy = player;
-    this.playerLight.update(playercopy);
+    playerLight.update(player);
     var leftX, botY;
 
     if(player.xPos - Math.floor(viewWidth/2) < 0)
@@ -201,14 +198,14 @@ function vision(){
     for(var y=botY+viewHeight; y>=botY;y--){
         for(var x=leftX; x<leftX+viewWidth; x++){
             if(map[x][y].unseen){
-                buffer += " ";
+                buffer += "&nbsp;";
             }
             else if(map[x][y].lit == false)
             {
-
                 if (prevColor != "DarkSlateGray"){
                     if (prevColor != null )
                         buffer+="</div>";
+                    prevColor = "DarkSlateGray";
                     buffer += "<div style=\"display:inline;color:DarkSlateGray\">";
                 }
                 if(map[x][y].lastSymbol != null)
