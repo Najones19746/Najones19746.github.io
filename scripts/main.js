@@ -1,32 +1,10 @@
 /**
- * Created by Owner on 8/25/2015.
+ * Created by Nick on 8/25/2015.
  */
-
-
-//Global variables
-var map = null;
-var visible = null;
-var groundObjects;
-var itemObjects;
-var monsterObjects;
-var structureObjects;
-var player = {xPos:125, yPos: 125, symbol: "@", color: "green", type:"player"};
-var playerLight = new LightSource(player, 8);
-var menuState = false;
-
-
 
 Array.prototype.peek = function() {
     return this[this.length-1];
 };
-
-
-document.addEventListener("keydown", function(e) {
-
-    //If not in menu, move (only state as of now)
-    if (menuState == false)
-        move(e);
-});
 
 function move(e){
 
@@ -79,7 +57,7 @@ function move(e){
     if(map[player.xPos+xChange][player.yPos+yChange].peek().type == "structure" && !checkFlag("pathable", map[player.xPos+xChange][player.yPos+yChange].peek()))
     {
         vision();
-        console.log("well fuck");
+        //console.log("well fuck");
         return 0;
     }
         map[player.xPos][player.yPos].pop();
@@ -87,9 +65,7 @@ function move(e){
         player.yPos += yChange;
         map[player.xPos][player.yPos].push(player);
 
-
         vision();
-
 
 }
 
@@ -102,130 +78,11 @@ function getObjectById(collection, value){
 }
 
 function checkFlag(flag, ob){
-    for (var prop in ob.flag){
-        if (prop == flag)
+    for (i=0 ; i< ob.flags.length; i++){
+        if (ob.flags[i] == flag)
             return true;
     }
     return false;
 }
 
 
-function init() {
-
-
-    $.ajaxSetup({
-        async: false
-    });
-
-    $.getJSON("json/ground.json", function (json) {
-        groundObjects = json;
-    });
-
-    $.getJSON("json/items.json", function (json) {
-        itemObjects = json;
-    });
-    $.getJSON("json/monsters.json", function (json) {
-        monsterObjects = json;
-    });
-    $.getJSON("json/structures.json", function (json) {
-        structureObjects = json;
-    });
-
-    map = [];
-    visible = [viewWidth][viewHeight];
-
-    var dirt =  getObjectById(groundObjects, "dirt");
-    var wall = getObjectById(structureObjects, "wall");
-    for (var i = 0; i < 250; i++) {
-        map[i]= new Array();
-        for (var j = 0; j < 250; j++) {
-            map[i][j] = new Array();
-            map[i][j].push(dirt);
-            map[i][j].lit = false;
-            map[i][j].unseen = true;
-        }
-    }
-    map[player.xPos][player.yPos].push(player);
-    for(i = player.yPos - 5; i < player.yPos + 5; i++){
-        map[player.xPos +2][i].push(wall);
-    }
-    map[0][0].push(wall);
-    map[0][249].push(wall);
-    map[249][0].push(wall);
-    map[249][249].push(wall);
-    //map[130][130].push(wall);
-    for(i = 1; i < 249; i++){
-        map[i][0].push(wall);
-        map[i][249].push(wall);
-        map[0][i].push(wall);
-        map[249][i].push(wall);
-    }
-    for(i=10; i < 240; i+=10){
-        for(j=10; j < 240; j+=10){
-            map[i][j].push(getObjectById(structureObjects, "debug_wall"));
-            map[i][j].visible = false;
-            map[i][j].lit = false;
-            map[i][j].lastSymbol = null;
-        }
-    }
-
-vision();
-}
-
-
-
-
-function vision(){
-    playerLight.update(player);
-    var leftX, botY;
-
-    if(player.xPos - Math.floor(viewWidth/2) < 0)
-    leftX = 0;
-    else if(player.xPos + Math.floor(viewWidth/2) >= mapWidth)
-    leftX = mapWidth - viewWidth;
-    else
-    leftX = player.xPos - Math.floor(viewWidth/2);
-
-
-    if(player.yPos - Math.floor(viewHeight/2) <= 0)
-        botY = 0;
-    else if(player.yPos + Math.floor(viewHeight/2) >= mapHeight)
-        botY = mapHeight - viewHeight -1 ;
-    else
-        botY = player.yPos - Math.floor(viewHeight/2) -1;
-    var buffer = "";
-    var prevColor = null;
-    for(var y=botY+viewHeight; y>=botY;y--){
-        for(var x=leftX; x<leftX+viewWidth; x++){
-            if(map[x][y].unseen){
-                buffer += "&nbsp;";
-            }
-            else if(map[x][y].lit == false)
-            {
-                if (prevColor != "DarkSlateGray"){
-                    if (prevColor != null )
-                        buffer+="</div>";
-                    prevColor = "DarkSlateGray";
-                    buffer += "<div style=\"display:inline;color:DarkSlateGray\">";
-                }
-                if(map[x][y].lastSymbol != null)
-                    buffer += map[x][y].lastSymbol;
-
-            }
-            else if(map[x][y].peek().color == prevColor){
-                buffer += map[x][y].peek().symbol;
-            }
-            else{
-                if (prevColor != ""){
-                    buffer += "</div>";
-                }
-                buffer +=  "<div style=\"display:inline;color:" + map[x][y].peek().color + "\">" + map[x][y].peek().symbol;
-                prevColor = map[x][y].peek().color;
-            }
-        }
-        buffer += "<br>";
-
-
-    }
-    document.getElementById(entityViewerName).innerHTML = buffer;
-}

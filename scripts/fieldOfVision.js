@@ -19,7 +19,7 @@ function LightSource(position, radius) {
 
     // calculates an octant. Called by the this.calculate when calculating lighting
     this.calculateOctant = function(cx, cy, row, start, end, radius, xx, xy, yx, yy, id) {
-        map[cx][cy].lit = true;
+        //map[cx][cy].lit = true;
         map[cx][cy].unseen = false;
         //map.data[cx][cy].draw(this.position, radius);
         var thing = {xPos: cx, yPos: cy};
@@ -49,15 +49,17 @@ function LightSource(position, radius) {
                     var r_slope = (dx+0.5)/(dy-0.5);
 
                     if(start < r_slope) {
-
+                        continue;
                     } else if( end > l_slope) {
                         break;
                     } else {
                         if(dx*dx + dy*dy < radius_squared) {
                             map[X][Y].lit = true;
                             map[X][Y].unseen = false;
+
                             if(map[X][Y].peek().type != "player")
                                 map[X][Y].lastSymbol = map[X][Y].peek().symbol;
+
                             //map.data[X][Y].draw(this.position, radius);
                             var thing = {xPos: X, yPos:Y};
                             this.tiles.push(thing);
@@ -108,7 +110,6 @@ function LightSource(position, radius) {
         }
 
         map[this.position.xPos][this.position.yPos].lit = true;
-        console.log("x pos" + this.position.xPos + "y pos" + this.position.yPos);
         map[this.position.xPos][this.position.yPos].unseen = false;
             if( map[this.position.xPos][this.position.yPos].peek() != player )
                 map[this.position.xPos][this.position.yPos].lastSymbol = map[this.position.xPos][this.position.yPos].peek().symbol;
@@ -122,4 +123,60 @@ function LightSource(position, radius) {
         this.clear();
         this.calculate();
     }
+}
+
+
+function vision(){
+    playerLight.update(player);
+    var leftX, botY;
+
+    if(player.xPos - Math.floor(viewWidth/2) < 0)
+        leftX = 0;
+    else if(player.xPos + Math.floor(viewWidth/2) >= mapWidth)
+        leftX = mapWidth - viewWidth;
+    else
+        leftX = player.xPos - Math.floor(viewWidth/2);
+
+
+    if(player.yPos - Math.floor(viewHeight/2) <= 0)
+        botY = 0;
+    else if(player.yPos + Math.floor(viewHeight/2) >= mapHeight)
+        botY = mapHeight - viewHeight -1 ;
+    else
+        botY = player.yPos - Math.floor(viewHeight/2) -1;
+    var buffer = "";
+    var prevColor = null;
+    for(var y=botY+viewHeight; y>=botY;y--){
+        for(var x=leftX; x<leftX+viewWidth; x++){
+            if(map[x][y].unseen){
+                buffer += "&nbsp;";
+            }
+            else if(map[x][y].lit == false)
+            {
+                if (prevColor != "DarkSlateGray"){
+                    if (prevColor != null )
+                        buffer+="</div>";
+                    prevColor = "DarkSlateGray";
+                    buffer += "<div style=\"display:inline;color:DarkSlateGray\">";
+                }
+                if(map[x][y].lastSymbol != null)
+                    buffer += map[x][y].lastSymbol;
+
+            }
+            else if(map[x][y].peek().color == prevColor){
+                buffer += map[x][y].peek().symbol;
+            }
+            else{
+                if (prevColor != ""){
+                    buffer += "</div>";
+                }
+                buffer +=  "<div style=\"display:inline;color:" + map[x][y].peek().color + "\">" + map[x][y].peek().symbol;
+                prevColor = map[x][y].peek().color;
+            }
+        }
+        buffer += "<br>";
+
+
+    }
+    document.getElementById(entityViewerName).innerHTML = buffer;
 }
