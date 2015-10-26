@@ -127,23 +127,23 @@ function LightSource(position, radius) {
 
 
 function vision(){
-    playerLight.update(player);
+    window.playerLight.update(window.player);
     var leftX, botY;
 
-    if(player.xPos - Math.floor(viewWidth/2) < 0)
+    if(window.player.xPos - Math.floor(viewWidth/2) < 0)
         leftX = 0;
-    else if(player.xPos + Math.floor(viewWidth/2) >= mapWidth)
+    else if(window.player.xPos + Math.floor(viewWidth/2) >= mapWidth)
         leftX = mapWidth - viewWidth;
     else
-        leftX = player.xPos - Math.floor(viewWidth/2);
+        leftX = window.player.xPos - Math.floor(viewWidth/2);
 
 
-    if(player.yPos - Math.floor(viewHeight/2) <= 0)
+    if(window.player.yPos - Math.floor(viewHeight/2) <= 0)
         botY = 0;
-    else if(player.yPos + Math.floor(viewHeight/2) >= mapHeight)
+    else if(window.player.yPos + Math.floor(viewHeight/2) >= mapHeight)
         botY = mapHeight - viewHeight -1 ;
     else
-        botY = player.yPos - Math.floor(viewHeight/2) -1;
+        botY = window.player.yPos - Math.floor(viewHeight/2) -1;
     var buffer = "";
     var prevColor = null;
     for(var y=botY+viewHeight; y>=botY;y--){

@@ -4,6 +4,7 @@
     "id": "debug_item",
     "symbol": "g",
     "color": "pink",
+    "damage":{"low":50, "high":9001},
     "flags": [""]
   },
   {
@@ -11,6 +12,24 @@
     "id": "bow",
     "symbol": ")",
     "color": "brown",
+    "damage":{"low":50, "high": 150},
     "flags": [""]
+  },
+  {
+    "type":"item",
+    "id":"sword",
+    "symbol":"/",
+    "color":"LightSlateGray",
+    "damage":{"low":100, "high": 300},
+    "flags":[""]
+  },
+  {
+    "type":"item",
+    "id":"fists",
+    "symbol":"F",
+    "color":"pink",
+    "damage":{"low":50, "high":100},
+    "flags":[""]
   }
+
 ]

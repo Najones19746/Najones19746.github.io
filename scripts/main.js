@@ -61,27 +61,27 @@ function move(e){
             return;
             break;
     }
-
-
-    if(map[player.xPos+xChange][player.yPos+yChange].peek().type == "structure" && !checkFlag("pathable", map[player.xPos+xChange][player.yPos+yChange].peek()))
-    {
-        vision();
-        main();
-        //console.log("well fuck");
-        return 0;
-    }
-        map[player.xPos][player.yPos].pop();
-        player.xPos += xChange;
-        player.yPos += yChange;
-        map[player.xPos][player.yPos].push(player);
-        player.initiative = actorQueue.pop().initiative - 100;
-        if(player.initiative > 0)
-        {
-            actorQueue.push(player, player.initiative);
-        }
-        document.getElementById("playerInit").innerHTML = String(player.initiative);
-        vision();
-        main();
+    window.player.move(xChange,yChange);
+    //old stuff, being moved to hostileActor.js
+    //if(map[window.player.xPos+xChange][window.player.yPos+yChange].peek().type == "structure" && !checkFlag("pathable", map[window.player.xPos+xChange][window.player.yPos+yChange].peek()))
+    //{
+    //    vision();
+    //    main();
+    //    //console.log("well fuck");
+    //    return 0;
+    //}
+    //map[window.player.xPos][window.player.yPos].pop();
+    //window.player.xPos += xChange;
+    //window.player.yPos += yChange;
+    //map[window.player.xPos][window.player.yPos].push(window.player);
+    //window.player.initiative = actorQueue.pop().initiative - 100;
+    //if(window.player.initiative > 0)
+    //{
+    //    actorQueue.push(window.player, window.player.initiative);
+    //}
+    //document.getElementById("playerInit").innerHTML = String(window.player.initiative);
+    //vision();
+    //main();
 }
 
 function getObjectById(collection, value){
@@ -113,12 +113,13 @@ function main(){
             actorQueue.push(actorList[i], actorList.initiative);
         }
     }
-    if (actorQueue.peek() == player)
+    if (actorQueue.peek() == window.player)
     {
         playerTurn = true;
     }
     else{
         playerTurn = false;
-
     }
 }
+
+window.onload = init();

@@ -12,30 +12,31 @@ document.addEventListener("keydown", function(e) {
 
 function init() {
 
-
     $.ajaxSetup({
         async: false
     });
-
     $.getJSON("json/ground.json", function (json) {
-        groundObjects = json;
+        window.groundObjects = json;
     });
 
     $.getJSON("json/items.json", function (json) {
-        itemObjects = json;
-    });
-    $.getJSON("json/monsters.json", function (json) {
-        monsterObjects = json;
-    });
-    $.getJSON("json/structures.json", function (json) {
-        structureObjects = json;
+        window.itemObjects = json;
     });
 
+    $.getJSON("json/monsters.json", function (json) {
+        window.monsterObjects = json;
+    });
+    $.getJSON("json/structures.json", function (json) {
+        window.structureObjects = json;
+    });
+
+    window.player = new hostileActor("@", "green", 1000, 500, 125, 125);
+    window.playerLight = new LightSource(window.player, 20);
     map = [];
     visible = [viewWidth][viewHeight];
 
-    var dirt =  getObjectById(groundObjects, "dirt");
-    var wall = getObjectById(structureObjects, "wall");
+    var dirt =  getObjectById(window.groundObjects, "dirt");
+    var wall = getObjectById(window.structureObjects, "wall");
     for (var i = 0; i < 250; i++) {
         map[i]= [];
         for (var j = 0; j < 250; j++) {
@@ -46,10 +47,10 @@ function init() {
         }
     }
 
-    map[player.xPos][player.yPos].push(player);
-    actorList.push(player);
-    actorQueue.push(player,player.initiative);
-    document.getElementById("playerInit").innerHTML = String(player.initiative);
+    map[window.player.xPos][window.player.yPos].push(window.player);
+    actorList.push(window.player);
+    actorQueue.push(window.player,window.player.initiative);
+    document.getElementById("playerInit").innerHTML = String(window.player.initiative);
 
     map[0][0].push(wall);
     map[0][249].push(wall);
@@ -64,7 +65,7 @@ function init() {
     }
     for(i=10; i < 240; i+=10){
         for(j=10; j < 240; j+=10){
-            map[i][j].push(getObjectById(structureObjects, "debug_wall"));
+            map[i][j].push(getObjectById(window.structureObjects, "debug_wall"));
             map[i][j].visible = false;
             map[i][j].lit = false;
             map[i][j].lastSymbol = null;
