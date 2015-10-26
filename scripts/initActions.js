@@ -6,6 +6,7 @@ document.addEventListener("keydown", function(e) {
     //If not in menu, move (only state as of now)
     if (menuState == false)
         move(e);
+
 });
 
 
@@ -44,7 +45,11 @@ function init() {
             map[i][j].unseen = true;
         }
     }
+
     map[player.xPos][player.yPos].push(player);
+    actorList.push(player);
+    actorQueue.push(player,player.initiative);
+    document.getElementById("playerInit").innerHTML = String(player.initiative);
 
     map[0][0].push(wall);
     map[0][249].push(wall);

@@ -6,7 +6,14 @@ Array.prototype.peek = function() {
     return this[this.length-1];
 };
 
+
+
+
+
 function move(e){
+
+    if(!playerTurn)
+        return;
 
     //ONLY PASS KEYPAD OR ARROWS
     var keyValue = e.keyCode;
@@ -51,12 +58,15 @@ function move(e){
             yChange += 1;
             break;
         default:
+            return;
             break;
     }
+
 
     if(map[player.xPos+xChange][player.yPos+yChange].peek().type == "structure" && !checkFlag("pathable", map[player.xPos+xChange][player.yPos+yChange].peek()))
     {
         vision();
+        main();
         //console.log("well fuck");
         return 0;
     }
@@ -64,9 +74,14 @@ function move(e){
         player.xPos += xChange;
         player.yPos += yChange;
         map[player.xPos][player.yPos].push(player);
-
+        player.initiative = actorQueue.pop().initiative - 100;
+        if(player.initiative > 0)
+        {
+            actorQueue.push(player, player.initiative);
+        }
+        document.getElementById("playerInit").innerHTML = String(player.initiative);
         vision();
-
+        main();
 }
 
 function getObjectById(collection, value){
@@ -85,4 +100,25 @@ function checkFlag(flag, ob){
     return false;
 }
 
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
+function main(){
+
+
+    if (actorQueue.length() == 1){
+        for(var i = 0; i < actorList.length; i++){
+            actorList[i].initiative = (actorList[i].baseInit + getRandomInt(0, 100));
+            actorQueue.push(actorList[i], actorList.initiative);
+        }
+    }
+    if (actorQueue.peek() == player)
+    {
+        playerTurn = true;
+    }
+    else{
+        playerTurn = false;
+
+    }
+}
