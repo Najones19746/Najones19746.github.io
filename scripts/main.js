@@ -61,8 +61,9 @@ function move(e){
             return;
             break;
     }
+    window.player.initiative = window.actorQueue.pop().initiative - 100;
     window.player.move(xChange,yChange);
-    //old stuff, being moved to hostileActor.js
+    //old stuff, being moved to actor.js
     //if(map[window.player.xPos+xChange][window.player.yPos+yChange].peek().type == "structure" && !checkFlag("pathable", map[window.player.xPos+xChange][window.player.yPos+yChange].peek()))
     //{
     //    vision();
@@ -107,18 +108,24 @@ function getRandomInt(min, max) {
 function main(){
 
 
-    if (actorQueue.length() == 1){
+    if (window.actorQueue.length == 0){
         for(var i = 0; i < actorList.length; i++){
             actorList[i].initiative = (actorList[i].baseInit + getRandomInt(0, 100));
-            actorQueue.push(actorList[i], actorList.initiative);
+            window.actorQueue.push(actorList[i], actorList.initiative);
         }
+        main();
+        return;
     }
-    if (actorQueue.peek() == window.player)
+    if (window.actorQueue.peek() == window.player)
     {
         playerTurn = true;
     }
     else{
         playerTurn = false;
+        //console.log("enemy turn");
+        var actingEntity = window.actorQueue.pop();
+        actingEntity.initiative = window.actorQueue.pop().initiative - 100;
+        actingEntity.moveTo(window.player);
     }
 }
 

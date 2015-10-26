@@ -30,7 +30,7 @@ function init() {
         window.structureObjects = json;
     });
 
-    window.player = new hostileActor("@", "green", 1000, 500, 125, 125);
+    window.player = new actor("@", "green", 1000, 500, 125, 125);
     window.playerLight = new LightSource(window.player, 20);
     map = [];
     visible = [viewWidth][viewHeight];
@@ -49,7 +49,11 @@ function init() {
 
     map[window.player.xPos][window.player.yPos].push(window.player);
     actorList.push(window.player);
-    actorQueue.push(window.player,window.player.initiative);
+    window.actorQueue.push(window.player,window.player.initiative);
+    var enemy = new actor("~","red", 300, 200, 125, 120);
+    actorList.push(enemy);
+    window.actorQueue.push(enemy, enemy.initiative);
+    map[enemy.xPos][enemy.yPos].push(enemy);
     document.getElementById("playerInit").innerHTML = String(window.player.initiative);
 
     map[0][0].push(wall);
@@ -74,4 +78,3 @@ function init() {
 
     vision();
 }
-
