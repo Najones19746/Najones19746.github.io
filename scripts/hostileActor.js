@@ -60,6 +60,7 @@ function actor(symbol, color, hp, baseInit, xPos, yPos){
         this.yPos += yChange;
         map[this.xPos][this.yPos].push(this);
         document.getElementById("playerInit").innerHTML = String(window.player.initiative);
+        document.getElementById("playerHP").innerHTML = String(window.player.hp);
         if(this.initiative > 0){
 
             window.actorQueue.push(this, this.initiative);
