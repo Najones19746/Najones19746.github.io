@@ -30,6 +30,14 @@
     "color":"pink",
     "damage":{"low":50, "high":100},
     "flags":[""]
+  },
+  {
+    "type":"item",
+    "id":"corpse",
+    "symbol":"%",
+    "color":"white",
+    "damage":{"low":0, "high":0},
+    "flags":[""]
   }
 
 ]

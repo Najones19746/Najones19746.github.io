@@ -49,10 +49,10 @@ function init() {
 
     map[window.player.xPos][window.player.yPos].push(window.player);
     actorList.push(window.player);
-    window.actorQueue.push(window.player,window.player.initiative);
+    //window.actorQueue.push(window.player,window.player.initiative);
     var enemy = new actor("~","red", 300, 200, 125, 120);
     actorList.push(enemy);
-    window.actorQueue.push(enemy, enemy.initiative);
+    //window.actorQueue.push(enemy, enemy.initiative);
     map[enemy.xPos][enemy.yPos].push(enemy);
     document.getElementById("playerInit").innerHTML = String(window.player.initiative);
 
@@ -75,6 +75,9 @@ function init() {
             map[i][j].lastSymbol = null;
         }
     }
+    for(i=0; i<actorList.length; i++)
+        actorQueue.push(actorList[i], actorList[i].id);
+
 
     vision();
 }

@@ -94,6 +94,8 @@ function getObjectById(collection, value){
 }
 
 function checkFlag(flag, ob){
+    //if(ob.type != "ground" && ob.type != "structure")
+        //console.log(ob);
     for (i=0 ; i< ob.flags.length; i++){
         if (ob.flags[i] == flag)
             return true;
@@ -107,6 +109,8 @@ function getRandomInt(min, max) {
 
 function main(){
 
+    document.getElementById("playerInit").innerHTML = String(window.player.initiative);
+    document.getElementById("playerHP").innerHTML = String(window.player.hp);
 
     if (window.actorQueue.length == 0){
         for(var i = 0; i < actorList.length; i++){
@@ -120,11 +124,11 @@ function main(){
     {
         playerTurn = true;
     }
-    else{
+    else if(window.actorQueue.peek() != null){
         playerTurn = false;
         //console.log("enemy turn");
         var actingEntity = window.actorQueue.pop();
-        actingEntity.initiative = window.actorQueue.pop().initiative - 100;
+        actingEntity.initiative = actingEntity.initiative - 100;
         actingEntity.moveTo(window.player);
     }
 }

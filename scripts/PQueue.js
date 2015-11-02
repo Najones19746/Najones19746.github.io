@@ -33,22 +33,23 @@ function priorityQueue(){
                 this.head.next = tempNode;
             }
         }
+        else
         {
-            this.tail = this.head;
-            this.lead = this.head.next;
-            while (this.lead != null)
+            var tail = this.head;
+            var lead = this.head.next;
+            while (lead != null)
             {
-                if(this.tail.priority < priority)
+                if(tail.priority < priority)
                 {
                     var middleNode = new node(data, priority);
-                    this.tail.next = middleNode;
-                    middleNode.next = this.lead;
+                    tail.next = middleNode;
+                    middleNode.next = lead;
                     return;
                 }
-                this.tail = this.lead;
-                this.lead = this.lead.next;
+                tail = lead;
+                lead = lead.next;
             }
-            this.tail.next = new node(data, priority);
+            tail.next = new node(data, priority);
         }
 
     };
@@ -71,7 +72,46 @@ function priorityQueue(){
             return null;
         return this.head.data;
     };
-
+    this.removeItemByID = function(id)
+    {
+        var tempNode = null;
+        var tail = this.head;
+        var lead = this.head;
+        if (lead == null)
+            return;
+        if(lead.data.id == id)
+        {
+            console.log("FOUND AND REMOVED NODE BY ID");
+            this.length -= 1;
+            tempNode = this.head;
+            this.head = lead.next;
+            tempNode.next = null;
+            return;
+        }
+        while(lead != null)
+        {
+            tail = lead;
+            lead = lead.next;
+            if(lead.data.id == id)
+            {
+                console.log("FOUND AND REMOVED NODE BY ID");
+                this.length -= 1;
+                tempNode = lead;
+                tail.next = tempNode.next;
+                tempNode = null; //possibly will cause an error
+                return;
+            }
+        }
+    };
+    this.traverse = function()
+    {
+        var walk = this.head;
+        console.log("walking queue");
+        while(walk != null){
+            console.log(walk.data);
+            walk = walk.next;
+        }
+    };
 }
 
 

@@ -12,13 +12,43 @@ function actor(symbol, color, hp, baseInit, xPos, yPos){
     this.xPos = xPos;
     this.yPos = yPos;
     this.flags = [];
+    this.items = [];
+    this.items.push(getObjectById(window.itemObjects, "corpse"));
     this.weapon = getObjectById(window.itemObjects, "fists");
+    this.id = window.idCounter;
+    window.idCounter++;
+
+    this.die = function(){
+        console.log("MAP STACK LENGTH ON DEATH");
+        console.log(map[this.xPos][this.yPos].length);
+        map[this.xPos][this.yPos].pop();
+        console.log(map[this.xPos][this.yPos].length);
+        for(var i = 0; i < this.items.length; i++)
+        {
+            map[this.xPos][this.yPos].push(this.items[i]);
+        }
+        for(i= 0; i< window.actorList.length; i++)
+        {
+            if(window.actorList[i].id == this.id)
+            {
+                console.log("splicing actor list");
+                console.log(window.actorList.length);
+                window.actorList.splice(i,1);
+                console.log(window.actorList.length);
+            }
+        }
+        //for(i=0; i< window.actorList.length; i++)
+        //    console.log(actorList[i])
+        window.actorQueue.removeItemByID(this.id);
+        //map[this.xPos][this.yPos].splice(1,0, this.items);
+    };
 
     this.takeDamage = function(damage){
         this.hp -= damage;
         if (this.hp < 0){
-            this.symbol = "%";
+            this.symbol = "NOT SUPPOSED TO BE HERE";
             this.color = "white";
+            this.die();
         }
     };
 
@@ -59,8 +89,6 @@ function actor(symbol, color, hp, baseInit, xPos, yPos){
         this.xPos += xChange;
         this.yPos += yChange;
         map[this.xPos][this.yPos].push(this);
-        document.getElementById("playerInit").innerHTML = String(window.player.initiative);
-        document.getElementById("playerHP").innerHTML = String(window.player.hp);
         if(this.initiative > 0){
 
             window.actorQueue.push(this, this.initiative);
