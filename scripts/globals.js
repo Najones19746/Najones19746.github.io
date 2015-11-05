@@ -9,7 +9,7 @@ const mapHeight = 250;
 const entityViewerName = "entities";
 
 //Global variables that aren't constant
-var map = null;
+window.map = null;
 var visible = null;
 window.groundObjects = null;
 window.itemObjects = null;

@@ -19,9 +19,9 @@ function LightSource(position, radius) {
 
     // calculates an octant. Called by the this.calculate when calculating lighting
     this.calculateOctant = function(cx, cy, row, start, end, radius, xx, xy, yx, yy, id) {
-        //map[cx][cy].lit = true;
-        map[cx][cy].unseen = false;
-        //map.data[cx][cy].draw(this.position, radius);
+        //window.map[cx][cy].lit = true;
+        window.map[cx][cy].unseen = false;
+        //window.map.data[cx][cy].draw(this.position, radius);
         var thing = {xPos: cx, yPos: cy};
         this.tiles.push(thing);
         var new_start = 0;
@@ -54,19 +54,19 @@ function LightSource(position, radius) {
                         break;
                     } else {
                         if(dx*dx + dy*dy < radius_squared) {
-                            map[X][Y].lit = true;
-                            map[X][Y].unseen = false;
+                            window.map[X][Y].lit = true;
+                            window.map[X][Y].unseen = false;
 
-                            if(map[X][Y].peek().type != "player")
-                                map[X][Y].lastSymbol = map[X][Y].peek().symbol;
+                            if(window.map[X][Y].peek().type != "player")
+                                window.map[X][Y].lastSymbol = window.map[X][Y].peek().symbol;
 
-                            //map.data[X][Y].draw(this.position, radius);
+                            //window.map.data[X][Y].draw(this.position, radius);
                             var thing = {xPos: X, yPos:Y};
                             this.tiles.push(thing);
                         }
 
                         if(blocked) {
-                            if(map[X][Y].peek().type == "structure" && checkFlag("blocksSight", map[X][Y].peek()))
+                            if(window.map[X][Y].peek().type == "structure" && checkFlag("blocksSight", window.map[X][Y].peek()))
                             {
                                 new_start = r_slope;
 
@@ -75,7 +75,7 @@ function LightSource(position, radius) {
                                 start = new_start;
                             }
                         } else {
-                            if(checkFlag("blocksSight", map[X][Y].peek()) || map[X][Y].peek().type == "structure" && i < radius) {
+                            if(checkFlag("blocksSight", window.map[X][Y].peek()) || window.map[X][Y].peek().type == "structure" && i < radius) {
                                 blocked = true;
                                 this.calculateOctant(cx, cy, i+1, start, l_slope, radius, xx, xy, yx, yy, id+1);
 
@@ -93,7 +93,7 @@ function LightSource(position, radius) {
     // sets flag lit to false on all tiles within radius of position specified
     this.clear = function () {
         for(var i = 0; i<this.tiles.length; i++) {
-            map[this.tiles[i].xPos][this.tiles[i].yPos].lit = false;
+            window.map[this.tiles[i].xPos][this.tiles[i].yPos].lit = false;
             //this.tiles[i].draw();
         }
 
@@ -109,11 +109,11 @@ function LightSource(position, radius) {
                 this.mult[0][i], this.mult[1][i], this.mult[2][i], this.mult[3][i], 0);
         }
 
-        map[this.position.xPos][this.position.yPos].lit = true;
-        map[this.position.xPos][this.position.yPos].unseen = false;
-            if( map[this.position.xPos][this.position.yPos].peek() != player )
-                map[this.position.xPos][this.position.yPos].lastSymbol = map[this.position.xPos][this.position.yPos].peek().symbol;
-        //map.tile(this.position).draw();
+        window.map[this.position.xPos][this.position.yPos].lit = true;
+        window.map[this.position.xPos][this.position.yPos].unseen = false;
+            if( window.map[this.position.xPos][this.position.yPos].peek() != player )
+                window.map[this.position.xPos][this.position.yPos].lastSymbol = window.map[this.position.xPos][this.position.yPos].peek().symbol;
+        //window.map.tile(this.position).draw();
         this.tiles.push(this.position);
     };
 
@@ -132,26 +132,26 @@ function vision(){
 
     if(window.player.xPos - Math.floor(viewWidth/2) < 0)
         leftX = 0;
-    else if(window.player.xPos + Math.floor(viewWidth/2) >= mapWidth)
-        leftX = mapWidth - viewWidth;
+    else if(window.player.xPos + Math.floor(viewWidth/2) >= window.mapWidth)
+        leftX = window.mapWidth - viewWidth;
     else
         leftX = window.player.xPos - Math.floor(viewWidth/2);
 
 
     if(window.player.yPos - Math.floor(viewHeight/2) <= 0)
         botY = 0;
-    else if(window.player.yPos + Math.floor(viewHeight/2) >= mapHeight)
-        botY = mapHeight - viewHeight -1 ;
+    else if(window.player.yPos + Math.floor(viewHeight/2) >= window.mapHeight)
+        botY = window.mapHeight - viewHeight -1 ;
     else
         botY = window.player.yPos - Math.floor(viewHeight/2) -1;
     var buffer = "";
     var prevColor = null;
     for(var y=botY+viewHeight; y>=botY;y--){
         for(var x=leftX; x<leftX+viewWidth; x++){
-            if(map[x][y].unseen){
+            if(window.map[x][y].unseen){
                 buffer += "&nbsp;";
             }
-            else if(map[x][y].lit == false)
+            else if(window.map[x][y].lit == false)
             {
                 if (prevColor != "DarkSlateGray"){
                     if (prevColor != null )
@@ -159,19 +159,19 @@ function vision(){
                     prevColor = "DarkSlateGray";
                     buffer += "<div style=\"display:inline;color:DarkSlateGray\">";
                 }
-                if(map[x][y].lastSymbol != null)
-                    buffer += map[x][y].lastSymbol;
+                if(window.map[x][y].lastSymbol != null)
+                    buffer += window.map[x][y].lastSymbol;
 
             }
-            else if(map[x][y].peek().color == prevColor){
-                buffer += map[x][y].peek().symbol;
+            else if(window.map[x][y].peek().color == prevColor){
+                buffer += window.map[x][y].peek().symbol;
             }
             else{
                 if (prevColor != ""){
                     buffer += "</div>";
                 }
-                buffer +=  "<div style=\"display:inline;color:" + map[x][y].peek().color + "\">" + map[x][y].peek().symbol;
-                prevColor = map[x][y].peek().color;
+                buffer +=  "<div style=\"display:inline;color:" + window.map[x][y].peek().color + "\">" + window.map[x][y].peek().symbol;
+                prevColor = window.map[x][y].peek().color;
             }
         }
         buffer += "<br>";

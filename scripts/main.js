@@ -2,10 +2,6 @@
  * Created by Nick on 8/25/2015.
  */
 
-Array.prototype.peek = function() {
-    return this[this.length-1];
-};
-
 
 
 
@@ -64,17 +60,17 @@ function move(e){
     window.player.initiative = window.actorQueue.pop().initiative - 100;
     window.player.move(xChange,yChange);
     //old stuff, being moved to actor.js
-    //if(map[window.player.xPos+xChange][window.player.yPos+yChange].peek().type == "structure" && !checkFlag("pathable", map[window.player.xPos+xChange][window.player.yPos+yChange].peek()))
+    //if(window.map[window.player.xPos+xChange][window.player.yPos+yChange].peek().type == "structure" && !checkFlag("pathable", window.map[window.player.xPos+xChange][window.player.yPos+yChange].peek()))
     //{
     //    vision();
     //    main();
     //    //console.log("well fuck");
     //    return 0;
     //}
-    //map[window.player.xPos][window.player.yPos].pop();
+    //window.map[window.player.xPos][window.player.yPos].pop();
     //window.player.xPos += xChange;
     //window.player.yPos += yChange;
-    //map[window.player.xPos][window.player.yPos].push(window.player);
+    //window.map[window.player.xPos][window.player.yPos].push(window.player);
     //window.player.initiative = actorQueue.pop().initiative - 100;
     //if(window.player.initiative > 0)
     //{
@@ -114,8 +110,9 @@ function main(){
 
     if (window.actorQueue.length == 0){
         for(var i = 0; i < actorList.length; i++){
+            console.log("re entered an actor to the actorQueue");
             actorList[i].initiative = (actorList[i].baseInit + getRandomInt(0, 100));
-            window.actorQueue.push(actorList[i], actorList.initiative);
+            window.actorQueue.push(actorList[i], actorList[i].initiative);
         }
         main();
         return;
