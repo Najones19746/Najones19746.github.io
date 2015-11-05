@@ -1,16 +1,17 @@
 function dungeonGen(){
     fillMap();
-    //createRoom(topleftX, topleftY, botrightX, botrightY)
-    var room1 = new createRoom(115,115,130,130);
-    console.log(room1.botrightX);
-    var room2 = new createRoom(115,145,130,175);
-    var room3 = new createRoom(145,115,160,130);
-    var room4 = new createRoom(90,90,100,100);
-    //makeVertHallway(122, 130, 145);
-    console.log(room1);
-    connectRooms(room1, room2);
+    //room(leftX, topY, rightX, botY)
+    var room1 = new room(115,130,130,115);
+    var room2 = new room(115,175,130,145);
+    var room3 = new room(145,130,160,115);
+    var room4 = new room(70,90,90,70);
+    room1.connectTo(room2);
+    room1.connectTo(room3);
+    room1.connectTo(room4);
+    /*connectRooms(room1, room2);
     connectRooms(room1, room3);
     connectRooms(room1, room3);
+    connectRooms(room1,room4);*/
 }
 
 function fillMap()
@@ -26,112 +27,79 @@ function fillMap()
     }
 }
 
-function createRoom(topleftX, topleftY, botrightX, botrightY){
-    this.topleftX = topleftX;
-    this.topleftY = topleftY;
-    this.botrightX = botrightX;
-    this.botrightY = botrightY;
+function room(leftX, topY, rightX, botY){
+    this.leftX = leftX;
+    this.topY = topY;
+    this.rightX = rightX;
+    this.botY = botY;
+    this.centerX = Math.floor((this.leftX + this.rightX)/2);
+    this.centerY = Math.floor((this.topY + this.botY)/2);
     var i,j;
-    for(i = topleftX; i<= botrightX; i++){
-        for(j = topleftY; j<= botrightY; j++)
+    for(i = leftX; i<= rightX; i++){
+        for(j = botY; j<= topY; j++)
         {
             window.map[i][j].pop();
         }
     }
+
+
+    this.connectTo = function(connectingRoom)
+    {
+        if(this.centerX >= connectingRoom.leftX && this.centerX <= connectingRoom.rightX
+            && connectingRoom.centerX >= this.leftX && connectingRoom.centerX <= this.rightX)
+        {
+            console.log("vert hallway");
+            if(this.centerY > connectingRoom.centerY)
+            {
+                makeVertHallway(this.centerX, connectingRoom.topY, this.botY);
+            }
+            else
+            {
+                makeVertHallway(this.centerX, this.topY, connectingRoom.botY);
+            }
+        }
+        else if(this.centerY >= connectingRoom.botY && this.centerY <= connectingRoom.topY
+                && connectingRoom.centerY >= this.botY && connectingRoom.centerY <= this.topY)
+        {
+            console.log("making horiz hallway?");
+            if(this.centerX > connectingRoom.centerX)
+            {
+                makeHorizHallway(this.centerY, connectingRoom.rightX, this.leftX);
+            }
+            else
+            {
+                makeHorizHallway(this.centerY, this.rightX, connectingRoom.leftX);
+            }
+        }
+        else
+        {
+            if(this.centerX < connectingRoom.centerX)
+            {
+                makeHorizHallway(this.centerY, this.rightX, connectingRoom.centerX);
+            }
+            else
+            {
+                makeHorizHallway(this.centerY, connectingRoom.centerX, this.rightX);
+            }
+            if(this.centerY < connectingRoom.centerY)
+            {
+                console.log("pls not here");
+                makeVertHallway(connectingRoom.centerX, this.topY, connectingRoom.centerY);
+            }
+            else
+            {
+                console.log("here?");
+                makeVertHallway(connectingRoom.centerX, connectingRoom.topY, this.centerY);
+            }
+        }
+
+    };
+
     return this;
 }
 
 
-function connectRooms(room1, room2) {
-    var room1x, room2x, room1y, room2y, leftx, rightx, topy, boty;
-    room1x = Math.floor( (room1.botrightX + room1.topleftX) /2);
-    room1y = Math.floor( (room1.topleftY + room1.botrightY) /2);
-    room2x = Math.floor( (room2.botrightX + room2.topleftX) /2);
-    room2y = Math.floor( (room2.topleftY + room2.botrightY) /2);
 
-    console.log(room1x);
-    if(room1x > room2.topleftX && room1x < room2.botrightY) // room1 is within the horizontal space of room 2
-    {
-
-        if(room1.topleftY < room2.botrightY) //  room1 is below room2
-        {
-            console.log("attempting horizontal space");
-            console.log(room1);
-            console.log(room2);
-            makeVertHallway(room1x, room1.topleftY, room2.botrightY);
-        }
-        else //room1 is above room2
-        {
-
-            makeVertHallway(room1x, room2.topleftY +1, room1.botrightY -1);
-        }
-    }
-    else if(room1y > room2.botrightY && room1y < room2.topleftY) // room1 is within the vertical space of room 2
-    {
-        if(room1.botrightX < room2.topleftX) //room1 is left of room2
-        {
-            makeHorizHallway(room1y,room1.botrightX+1, room2.topleftX-1);
-        }
-        else // room1 is right of room2
-        {
-            makeHorizHallway(room1y, room2.botrightX+1, room2.topleftX-1);
-        }
-    }
-    else if(room2x > room1.topleftX && room2x < room1.botrightX) // room2 is within the horizontal space of room1
-    {
-        if(room2.topleftY < room1.botrightY) // room2 is below room1
-        {
-            makeVertHallway(room2x, room2.topleftY+1, room1.botrightY-1);
-        }
-        else //room2 is above room1
-        {
-            makeVertHallway(room2x, room1.topleftY+1, room2.botrightY-1);
-        }
-    }
-    else if(room2y > room1.botrightY && room2y < room1.topleftY) //room2 is within vertical space of room1
-    {
-        if (room2.botrightX < room1.topleftX)//room2 is left of room1
-        {
-            makeHorizHallway(room2y, room2.botrightX+1, room1.topleftX-1);
-
-        }
-        else //room2 is left of room1
-        {
-            makeHorizHallway(room2y, room1.botrightX+1, room2.topleftX-1);
-        }
-    }
-    else // rooms are diagonal to each other
-    {
-        console.log("Diagonal room connection");
-        if(room1x < room2x) // room 1 is to the left
-        {
-
-            if (room1y < room2y) // room1 is below
-            {
-                makeHorizHallway(room1y,room1.botrightX,room2x);
-                makeVertHallway(room2x, room1y, room2.botrightY)
-            }
-            else // room1 is above
-            {
-                makeHorizHallway(room1y,room1.botrightX,room2x);
-                makeVertHallway(room2x, room2y, room1.botrightY);
-            }
-        }
-        else //room1 is to the right
-        {
-            if (room1y < room2y) // room1 is below
-            {
-                makeHorizHallway(room2y,room2.botrightX,room1x);
-                makeVertHallway(room2x, room1y, room2.botrightY)
-            }
-            else // room1 is above
-            {
-                makeHorizHallway(room2y,room2.botrightX,room1x);
-                makeVertHallway(room2x, room2y, room1.botrightY);
-            }
-        }
-    }
-}
 
 function makeHorizHallway(y, x1, x2)
 {
