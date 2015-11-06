@@ -1,6 +1,12 @@
 /**
  * Created by Nick on 10/22/2015.
  */
+
+document.onmousemove = function(e){
+    var pageCoords = "( " + e.pageX + ", " + e.pageY + " )";
+    console.log(pageCoords);
+};
+
 document.addEventListener("keydown", function(e) {
 
     //If not in menu, move (only state as of now)
@@ -12,6 +18,12 @@ document.addEventListener("keydown", function(e) {
 Array.prototype.peek = function() {
     return this[this.length-1];
 };
+
+//randomBetween is an inclusive both ways function
+function randomBetween(min, max){
+    return Math.floor(Math.random()*(max-min+1)+min);
+
+}
 
 function init() {
 

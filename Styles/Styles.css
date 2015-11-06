@@ -1,0 +1,11 @@
+div#infoBox{
+    position: absolute;
+    right: 50px;
+    top: 50px;
+    color: white;
+}
+
+div#noBreak{
+    display: inline;
+    background-color: black;
+}

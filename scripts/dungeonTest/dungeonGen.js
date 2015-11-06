@@ -1,5 +1,6 @@
 function dungeonGen(){
     fillMap();
+    window.rooms = [];
     //room(leftX, topY, rightX, botY)
     var room1 = new room(115,130,130,115);
     var room2 = new room(115,175,130,145);
@@ -48,7 +49,6 @@ function room(leftX, topY, rightX, botY){
         if(this.centerX >= connectingRoom.leftX && this.centerX <= connectingRoom.rightX
             && connectingRoom.centerX >= this.leftX && connectingRoom.centerX <= this.rightX)
         {
-            console.log("vert hallway");
             if(this.centerY > connectingRoom.centerY)
             {
                 makeVertHallway(this.centerX, connectingRoom.topY, this.botY);
@@ -61,7 +61,6 @@ function room(leftX, topY, rightX, botY){
         else if(this.centerY >= connectingRoom.botY && this.centerY <= connectingRoom.topY
                 && connectingRoom.centerY >= this.botY && connectingRoom.centerY <= this.topY)
         {
-            console.log("making horiz hallway?");
             if(this.centerX > connectingRoom.centerX)
             {
                 makeHorizHallway(this.centerY, connectingRoom.rightX, this.leftX);
@@ -83,12 +82,10 @@ function room(leftX, topY, rightX, botY){
             }
             if(this.centerY < connectingRoom.centerY)
             {
-                console.log("pls not here");
                 makeVertHallway(connectingRoom.centerX, this.topY, connectingRoom.centerY);
             }
             else
             {
-                console.log("here?");
                 makeVertHallway(connectingRoom.centerX, connectingRoom.topY, this.centerY);
             }
         }
@@ -112,11 +109,8 @@ function makeHorizHallway(y, x1, x2)
 
 function makeVertHallway(x, y1, y2){
     var i;
-    console.log(y1);
-    console.log(y2);
     for(i=y1; i<= y2; i++)
     {
-        console.log(window.map[x][i].peek().type);
         while(window.map[x][i].peek().type == "structure")
         {
             window.map[x][i].pop();

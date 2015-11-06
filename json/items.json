@@ -20,7 +20,7 @@
     "id":"sword",
     "symbol":"/",
     "color":"LightSlateGray",
-    "damage":{"low":100, "high": 500},
+    "damage":{"low":100, "high": 300},
     "flags":[""]
   },
   {
