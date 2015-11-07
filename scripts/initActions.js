@@ -2,11 +2,6 @@
  * Created by Nick on 10/22/2015.
  */
 
-document.onmousemove = function(e){
-    var pageCoords = "( " + e.pageX + ", " + e.pageY + " )";
-    console.log(pageCoords);
-};
-
 document.addEventListener("keydown", function(e) {
 
     //If not in menu, move (only state as of now)
