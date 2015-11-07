@@ -6,10 +6,15 @@
 
 </head>
 <body>
-<div  id="entities" style="background-color:black;font-family:'Lucida Console', monospace"></div>
+<div  id="entities" style=""></div>
+<div id="separator">X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X </div>
 <div id="infoBox">
-    Initiative: <div id="playerInit">1000</div>
-    HP: <div id="playerHP">1000</div>
+    <br/><br/>
+    Initiative: <div id="playerInit"></div> <br>
+    <div id="allHpInfo">
+        <div style="float: left">HP:&nbsp;&nbsp;</div> <div id="playerHP"></div>
+        <div id="hpBarContainer"><div id="greenHP"></div><div id="redHP"></div></div>
+    </div>
 <br/>
 <br/>
 The <div id="noBreak" style="color: green">@</div> is your character <br>
@@ -27,6 +32,7 @@ A <div id="noBreak" style="color: white">#</div> is a Wall <br>
 <!--external end
 
 <!-- internal start-->
+<link type="text/css" rel="stylesheet" href="Styles/clearStyles.css" />
 <link type="text/css" rel="stylesheet" href="Styles/Styles.css" />
 <script src="scripts/hostileActor.js"></script>
 <script src="scripts/dungeonTest/dungeonGen.js"></script>

@@ -6,6 +6,7 @@ function actor(symbol, color, hp, baseInit, xPos, yPos){
     this.type = "actor";
     this.symbol = symbol;
     this.color = color;
+    this.maxhp = hp;
     this.hp = hp;
     this.baseInit = baseInit;
     this.initiative = baseInit + getRandomInt(0,100);

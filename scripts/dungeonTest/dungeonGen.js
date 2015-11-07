@@ -3,20 +3,19 @@ function dungeonGen(){
     window.rooms = [];
     //room(leftX, topY, rightX, botY)
     var room1 = new room(115,130,130,115);
-    window.rooms.push(room1);
-    roomGen(15);
+    roomGen(12);
 
     //var room2 = new room(90,155,110,145);
     //var room3 = new room(145,155,155,140);
     //var room4 = new room(145,100,160,90);
     //var room5 = new room(100,95,110,80);
-
+    //
     //window.rooms.push(room2);
     //window.rooms.push(room3);
     //window.rooms.push(room4);
     //window.rooms.push(room5);
     //for(i = 1; i< window.rooms.length; i++){
-    //    window.rooms[0].connectTo(window.rooms[i]);
+    //    window.rooms[i].connectTo(window.rooms[0]);
     //}
 
     /*connectRooms(room1, room2);
@@ -48,8 +47,11 @@ function roomGen(numRooms)
             topY = randomBetween(botY+5, botY+20);
             nextRoom = new room(leftX,topY,rightX,botY);
         }
-        randRoom = rooms[ randomBetween(0,window.rooms.length - 1) ];
-
+        randRoom = window.rooms[ randomBetween(0,window.rooms.length - 1) ];
+        while(randRoom === nextRoom)
+        {
+            randRoom = window.rooms[ randomBetween(0,window.rooms.length - 1) ];
+        }
         randRoom.connectTo(nextRoom);
         //window.rooms.push(nextRoom);
     }
@@ -148,7 +150,7 @@ function room(leftX, topY, rightX, botY){
             //If this is lower than connecting room center
             if(this.centerY < connectingRoom.centerY)
             {
-                makeVertHallway(connectingRoom.centerX, this.topY, connectingRoom.centerY);
+                makeVertHallway(connectingRoom.centerX, this.centerY, connectingRoom.centerY);
             }
             else
             {
@@ -169,7 +171,9 @@ function makeHorizHallway(y, x1, x2)
     var i;
     for(i=x1; i<=x2; i++){
         while(window.map[i][y].peek().type == "structure")
+        {
             window.map[i][y].pop();
+        }
     }
 }
 
