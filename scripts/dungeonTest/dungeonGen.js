@@ -3,16 +3,18 @@ function dungeonGen(){
     window.rooms = [];
     //room(leftX, topY, rightX, botY)
     var room1 = new room(115,130,130,115);
-    var room2 = new room(115,175,130,145);
-    var room3 = new room(145,130,160,115);
-    var room4 = new room(70,90,90,70);
     window.rooms.push(room1);
-    window.rooms.push(room2);
-    window.rooms.push(room3);
-    window.rooms.push(room4);
-    room1.connectTo(room2);
-    room1.connectTo(room3);
-    room1.connectTo(room4);
+    //var room2 = new room(115,175,130,145);
+    //var room3 = new room(145,130,160,115);
+    //var room4 = new room(70,90,90,70);
+    //window.rooms.push(room1);
+    //window.rooms.push(room2);
+    //window.rooms.push(room3);
+    //window.rooms.push(room4);
+    //room1.connectTo(room2);
+    //room1.connectTo(room3);
+    //room1.connectTo(room4);
+    roomGen(10);
     /*connectRooms(room1, room2);
     connectRooms(room1, room3);
     connectRooms(room1, room3);
@@ -33,23 +35,19 @@ function roomGen(numRooms)
         topY = randomBetween(botY, botY+20);
 
         nextRoom = new room(leftX,topY,rightX,botY);
-        while (nextRoom != false)
+        while (nextRoom == false)
         {
             console.log("attempting again");
             leftX = randomBetween(10,200);
-            rightX = randomBetween(leftX, leftX+20);
+            rightX = randomBetween(leftX, leftX+10);
             botY = randomBetween(10,200);
-            topY = randomBetween(botY, botY+20);
+            topY = randomBetween(botY, botY+10);
             nextRoom = new room(leftX,topY,rightX,botY);
         }
-        window.rooms.push(nextRoom);
         randRoom = rooms[ randomBetween(0,window.rooms.length - 1) ];
-        while(randRoom != nextRoom)
-        {
-            randRoom = rooms[ randomBetween(0,window.rooms.length - 1) ];
-        }
-        nextRoom.connectTo(randRoom);
-        window.rooms.push(nextRoom);
+
+        randRoom.connectTo(nextRoom);
+        //window.rooms.push(nextRoom);
     }
 
 
@@ -86,7 +84,8 @@ function room(leftX, topY, rightX, botY){
     for(i = leftX; i<= rightX; i++){
         for(j = botY; j<= topY; j++)
         {
-            window.map[i][j].pop();
+            while(window.map[i][j].peek().type == "structure")
+                window.map[i][j].pop();
         }
     }
 
@@ -99,6 +98,7 @@ function room(leftX, topY, rightX, botY){
 
     this.connectTo = function(connectingRoom)
     {
+        console.log("connecting");
         //If the center of this room is between the left and right bounds of the connecting room
         //AND the center of the connecting room is within the left and right bounds of this room
         if(this.centerX >= connectingRoom.leftX && this.centerX <= connectingRoom.rightX
@@ -132,6 +132,7 @@ function room(leftX, topY, rightX, botY){
         else
         {
             //If this center is left of the connecting room center
+            console.log("diagonal");
             if(this.centerX < connectingRoom.centerX)
             {
                 makeHorizHallway(this.centerY, this.rightX, connectingRoom.centerX);
@@ -152,7 +153,7 @@ function room(leftX, topY, rightX, botY){
         }
 
     };
-
+    window.rooms.push(this);
     return this;
 }
 
