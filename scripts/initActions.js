@@ -20,6 +20,18 @@ function randomBetween(min, max){
 
 }
 
+function godVision(){
+    var i,j;
+    for(i=0; i<250; i++)
+    {
+        for(j=0; j<250; j++)
+        {
+            window.map[i][j].lastSymbol = window.map[i][j].peek().symbol;
+            window.map[i][j].unseen = false;
+        }
+    }
+}
+
 function init() {
 
     $.ajaxSetup({
@@ -54,6 +66,7 @@ function init() {
             window.map[i][j].push(dirt);
             window.map[i][j].lit = false;
             window.map[i][j].unseen = true;
+            window.map[i][j].lastSymbol = null;
         }
     }
     dungeonGen();

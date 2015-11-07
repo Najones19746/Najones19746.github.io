@@ -105,8 +105,8 @@ function getRandomInt(min, max) {
 
 function main(){
 
-    document.getElementById("playerInit").innerHTML = String(window.player.initiative);
-    document.getElementById("playerHP").innerHTML = String(window.player.hp);
+    //document.getElementById("playerInit").innerHTML = String(window.player.initiative);
+    //document.getElementById("playerHP").innerHTML = String(window.player.hp);
 
     if (window.actorQueue.length == 0){
         for(var i = 0; i < actorList.length; i++){

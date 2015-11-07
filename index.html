@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Vidja</title>
-    <link rel="import" type="text/html" href="scripts/externalSources.html">
-    <link rel="import" type="text/html" href="scripts/internalSources.html">
+
 </head>
 <body>
 <div  id="entities" style="background-color:black;font-family:'Lucida Console', monospace"></div>
 <div id="infoBox">
-    Initiative: <div id="playerInit"></div>
-    HP: <div id="playerHP"></div>
+    Initiative: <div id="playerInit">1000</div>
+    HP: <div id="playerHP">1000</div>
 <br/>
 <br/>
 The <div id="noBreak" style="color: green">@</div> is your character <br>
@@ -20,4 +19,22 @@ A <div id="noBreak" style="color: brown">.</div> is a floor tile <br>
 A <div id="noBreak" style="color: white">#</div> is a Wall <br>
 </div>
 </body>
+
+
+<!--external start-->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.5.0/fabric.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<!--external end
+
+<!-- internal start-->
+<link type="text/css" rel="stylesheet" href="Styles/Styles.css" />
+<script src="scripts/hostileActor.js"></script>
+<script src="scripts/dungeonTest/dungeonGen.js"></script>
+<script src="scripts/PQueue.js"></script>
+<script src="scripts/initActions.js"></script>
+<script src="scripts/fieldOfVision.js"></script>
+<script src="scripts/globals.js"></script>
+<script src="scripts/main.js"></script>
+<!--internal end-->
+
 </html>
