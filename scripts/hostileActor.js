@@ -55,7 +55,7 @@ function actor(symbol, color, hp, baseInit, xPos, yPos){
 
     this.nextTo = function(target)
     {
-      return (Math.abs(this.xPos - target.xPos) < 1 || Math.abs(target.yPos - this.yPos) < 1);
+      return (Math.abs(this.xPos - target.xPos) <= 1 || Math.abs(target.yPos - this.yPos) <= 1);
     };
 
     this.meleeAttack = function(target){
