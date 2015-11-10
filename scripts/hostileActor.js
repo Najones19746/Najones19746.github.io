@@ -74,7 +74,8 @@ function actor(symbol, color, hp, baseInit, xPos, yPos){
             //console.log("well fuck");
             return 0;
         }
-        if(window.map[this.xPos+xChange][this.yPos+yChange].peek().type == "actor")
+        if(window.map[this.xPos+xChange][this.yPos+yChange].peek() != this &&
+            window.map[this.xPos+xChange][this.yPos+yChange].peek().type == "actor")
         {
             this.meleeAttack(window.map[this.xPos+xChange][this.yPos+yChange].peek());
             if(this.initiative > 0)
