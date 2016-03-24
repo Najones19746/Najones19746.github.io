@@ -59,26 +59,6 @@ function move(e){
     }
     window.player.initiative = window.actorQueue.pop().initiative - 100;
     window.player.move(xChange,yChange);
-    //old stuff, being moved to actor.js
-    //if(window.map[window.player.xPos+xChange][window.player.yPos+yChange].peek().type == "structure" && !checkFlag("pathable", window.map[window.player.xPos+xChange][window.player.yPos+yChange].peek()))
-    //{
-    //    vision();
-    //    main();
-    //    //console.log("well fuck");
-    //    return 0;
-    //}
-    //window.map[window.player.xPos][window.player.yPos].pop();
-    //window.player.xPos += xChange;
-    //window.player.yPos += yChange;
-    //window.map[window.player.xPos][window.player.yPos].push(window.player);
-    //window.player.initiative = actorQueue.pop().initiative - 100;
-    //if(window.player.initiative > 0)
-    //{
-    //    actorQueue.push(window.player, window.player.initiative);
-    //}
-    //document.getElementById("playerInit").innerHTML = String(window.player.initiative);
-    //vision();
-    //main();
 }
 
 function getObjectById(collection, value){
@@ -104,7 +84,7 @@ function getRandomInt(min, max) {
 }
 
 function main(){
-
+    console.profile();
     document.getElementById("playerInit").innerHTML = String(window.player.initiative);
     document.getElementById("playerHP").innerHTML = String(window.player.hp);
     var percentHPLeft = Math.round(window.player.hp / window.player.maxhp * 100 );
@@ -132,6 +112,7 @@ function main(){
         actingEntity.initiative = actingEntity.initiative - 100;
         actingEntity.moveTo(window.player);
     }
+    console.profileEnd();
 }
 
 window.onload = init();

@@ -113,9 +113,12 @@ function actor(symbol, color, hp, baseInit, xPos, yPos){
         //self.move(dx, dy)
         var dx = target.xPos - this.xPos;
         var dy = target.yPos - this.yPos;
-        var distance = Math.sqrt(dx * dx + dy * dy)
+        var distance = Math.sqrt(dx * dx + dy * dy);
         dx = Math.round(dx / distance);
         dy = Math.round(dy / distance);
-        this.move(dx,dy);
+        if(window.map[this.xPos][this.yPos].lit == true)
+            this.move(dx,dy);
+        else
+            this.move(0,0);
     }
 }
