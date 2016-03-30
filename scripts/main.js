@@ -84,7 +84,7 @@ function getRandomInt(min, max) {
 }
 
 function main(){
-    console.profile();
+
     document.getElementById("playerInit").innerHTML = String(window.player.initiative);
     document.getElementById("playerHP").innerHTML = String(window.player.hp);
     var percentHPLeft = Math.round(window.player.hp / window.player.maxhp * 100 );
@@ -112,7 +112,7 @@ function main(){
         actingEntity.initiative = actingEntity.initiative - 100;
         actingEntity.moveTo(window.player);
     }
-    console.profileEnd();
+
 }
 
 window.onload = init();

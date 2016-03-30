@@ -67,7 +67,11 @@ function actor(symbol, color, hp, baseInit, xPos, yPos){
 
 
     this.move = function (xChange, yChange) {
-        if(window.map[this.xPos+xChange][this.yPos+yChange].peek().type == "structure" && !checkFlag("pathable", window.map[this.xPos+xChange][this.yPos+yChange].peek()))
+        console.log(xChange);
+        console.log(yChange);
+        console.log(window.map[this.xPos+xChange][this.yPos+yChange].peek());
+        if(window.map[this.xPos+xChange][this.yPos+yChange].peek().type == "structure"
+            && !checkFlag("pathable", window.map[this.xPos+xChange][this.yPos+yChange].peek()))
         {
             vision();
             main();
@@ -101,24 +105,29 @@ function actor(symbol, color, hp, baseInit, xPos, yPos){
 
     this.moveTo = function(target){
 
-        //#vector from this object to the target, and distance
-        //dx = target_x - self.x
-        //dy = target_y - self.y
-        //distance = math.sqrt(dx ** 2 + dy ** 2)
-        //
-        //#normalize it to length 1 (preserving direction), then round it and
-        //#convert to integer so the movement is restricted to the window.map grid
-        //dx = int(round(dx / distance))
-        //dy = int(round(dy / distance))
-        //self.move(dx, dy)
-        var dx = target.xPos - this.xPos;
-        var dy = target.yPos - this.yPos;
+        var path = findPath(window.map[this.xPos][this.yPos], window.map[target.xPos][target.yPos]);
+        console.log(path);
+        var dx = path[0].xPos - this.xPos;
+        var dy = path[0].yPos - this.yPos;
         var distance = Math.sqrt(dx * dx + dy * dy);
-        dx = Math.round(dx / distance);
-        dy = Math.round(dy / distance);
+        //dx = Math.round(dx / distance);
+        //dy = Math.round(dy / distance);
+
         if(window.map[this.xPos][this.yPos].lit == true)
             this.move(dx,dy);
         else
             this.move(0,0);
+
+        //var dx = target.xPos - this.xPos;
+        //var dy = target.yPos - this.yPos;
+        //var distance = Math.sqrt(dx * dx + dy * dy);
+        //dx = Math.round(dx / distance);
+        //dy = Math.round(dy / distance);
+        //if(window.map[this.xPos][this.yPos].lit == true)
+        //    this.move(dx,dy);
+        //else
+        //    this.move(0,0);
+        var dx = path[0].xPos - this.xPos;
+        var dy = path[0].yPos - this.yPos;
     }
 }

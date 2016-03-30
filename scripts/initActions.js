@@ -69,54 +69,76 @@ function init() {
             window.map[i][j].gScore = Infinity;
             window.map[i][j].fScore = Infinity;
             window.map[i][j].neighbors = [];
+            window.map[i][j].xPos = i;
+            window.map[i][j].yPos = j;
+        }
+    }
 
-
-            //TODO IMPROVE THIS
+    for(i=0; i< mapWidth;i++){
+        for(j=0; j<mapHeight; j++)
+        {
             var k = 0;
             //left
             if (i - 1 >= 0) {
                 window.map[i][j].neighbors[k] = window.map[i - 1][j];
+                window.map[i][j].neighbors[k].xPos = i-1;
+                window.map[i][j].neighbors[k].yPos = j;
                 k++;
             }
             //up-left
-            if (i - 1 >= 0 && j + 1 < window.mapHeight) {
+            if (i - 1 >= 0 && j + 1 < mapHeight) {
                 window.map[i][j].neighbors[k] = window.map[i - 1][j + 1];
+                window.map[i][j].neighbors[k].xPos = i-1;
+                window.map[i][j].neighbors[k].yPos = j+1;
                 k++;
             }
             //up
-            if (j + 1 < window.mapHeight) {
+            if (j + 1 < mapHeight) {
                 window.map[i][j].neighbors[k] = window.map[i][j + 1];
+                window.map[i][j].neighbors[k].xPos = i;
+                window.map[i][j].neighbors[k].yPos = j+1;
                 k++;
             }
             //up right
-            if (i + 1 < window.mapWidth && j + 1 < window.mapHeight) {
+            if (i + 1 < mapWidth && j + 1 < mapHeight) {
                 window.map[i][j].neighbors[k] = window.map[i + 1][j + 1];
+                window.map[i][j].neighbors[k].xPos = i+1;
+                window.map[i][j].neighbors[k].yPos = j+1;
                 k++;
             }
             //right
-            if (i + 1 < window.mapWidth) {
+            if (i + 1 < mapWidth) {
                 window.map[i][j].neighbors[k] = window.map[i + 1][j];
+                window.map[i][j].neighbors[k].xPos = i+1;
+                window.map[i][j].neighbors[k].yPos = j;
                 k++;
             }
             //right down
-            if (i + 1 < window.mapWidth && j - 1 >= 0) {
+            if (i + 1 < mapWidth && j - 1 >= 0) {
                 window.map[i][j].neighbors[k] = window.map[i + 1][j - 1];
+                window.map[i][j].neighbors[k].xPos = i+1;
+                window.map[i][j].neighbors[k].yPos = j-1;
                 k++;
             }
             //down
             if (j - 1 >= 0) {
                 window.map[i][j].neighbors[k] = window.map[i][j - 1];
+                window.map[i][j].neighbors[k].xPos = i;
+                window.map[i][j].neighbors[k].yPos = j-1;
                 k++;
             }
             //down left
             if (i - 1 >= 0 && j - 1 >= 0) {
                 window.map[i][j].neighbors[k] = window.map[i - 1][j - 1];
+                window.map[i][j].neighbors[k].xPos = i-1;
+                window.map[i][j].neighbors[k].yPos = j-1;
                 k++;
             }
             //done?
 
         }
     }
+
     dungeonGen();
 
 

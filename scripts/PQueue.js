@@ -18,7 +18,7 @@ function priorityQueue(){
         if (this.head == null)
         {
             this.head = new node(data, priority);
-            this.traverse();
+            //this.traverse();
         }
         else if(this.head.next == null)
         {
@@ -26,14 +26,14 @@ function priorityQueue(){
             if(this.head.priority > priority)
             {
                 this.head.next = new node(data, priority);
-                this.traverse();
+                //this.traverse();
             }
             else
             {
                 var tempNode = this.head;
                 this.head = new node(data, priority);
                 this.head.next = tempNode;
-                this.traverse();
+                //this.traverse();
             }
         }
         else
@@ -47,14 +47,14 @@ function priorityQueue(){
                     var middleNode = new node(data, priority);
                     tail.next = middleNode;
                     middleNode.next = lead;
-                    this.traverse();
+                    //this.traverse();
                     return;
                 }
                 tail = lead;
                 lead = lead.next;
             }
             tail.next = new node(data, priority);
-            this.traverse();
+            //this.traverse();
         }
 
     };
