@@ -2,10 +2,11 @@
  * Created by Nick on 10/25/2015.
  */
 
-function actor(symbol, color, hp, baseInit, xPos, yPos){
+function actor(symbol, color, name , hp, baseInit, xPos, yPos){
     this.type = "actor";
     this.symbol = symbol;
     this.color = color;
+    this.name = name;
     this.maxhp = hp;
     this.hp = hp;
     this.baseInit = baseInit;
@@ -61,6 +62,7 @@ function actor(symbol, color, hp, baseInit, xPos, yPos){
     this.meleeAttack = function(target){
         if (this.nextTo(target)) {
             var inflictedDamage = getRandomInt(this.weapon.damage.low, this.weapon.damage.high);
+            window.log.logMessage(this.name + " hit " + target.name + " with " + this.weapon.id + " for " + inflictedDamage + " damage");
             target.takeDamage(inflictedDamage);
         }
     };

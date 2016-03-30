@@ -49,8 +49,8 @@ function init() {
     $.getJSON("json/structures.json", function (json) {
         window.structureObjects = json;
     });
-
-    window.player = new actor("@", "green", 1000, 500, 125, 125);
+    window.log = new messageLog();
+    window.player = new actor("@", "green", "You" , 1000, 500, 125, 125);
     window.playerLight = new LightSource(window.player, 20);
     window.map = [];
     visible = [viewWidth][viewHeight];
@@ -145,7 +145,7 @@ function init() {
     window.map[window.player.xPos][window.player.yPos].push(window.player);
     actorList.push(window.player);
     //window.actorQueue.push(window.player,window.player.initiative);
-    var enemy = new actor("~", "red", 300, 350, 125, 120);
+    var enemy = new actor("~", "red", "Hostile human" , 300, 350, 125, 120);
     enemy.weapon = getObjectById(window.itemObjects, "sword");
     actorList.push(enemy);
     //window.actorQueue.push(enemy, enemy.initiative);
