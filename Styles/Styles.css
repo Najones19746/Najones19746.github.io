@@ -124,7 +124,14 @@ ul#messageLog{
     display: block;
     padding-left: 13%;
 }
-#MainInventory ul.InventoryActions li::first-letter {
+
+#drop{
+    color: red;
+}
+#activate{
+    color: red;
+}
+#equip{
     color: red;
 }
 

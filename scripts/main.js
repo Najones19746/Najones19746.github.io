@@ -13,11 +13,10 @@ function move(e){
 
     //ONLY PASS KEYPAD OR ARROWS
     var keyValue = e.keyCode;
-
     var xChange = 0;
     var yChange = 0;
     var lookToggle = false;
-
+    var playerInventoryToggle = false;
     switch (keyValue) {
         case 97:
             xChange -= 1;
@@ -53,14 +52,22 @@ function move(e){
             xChange += 1;
             yChange += 1;
             break;
+        //l
         case 76:
             lookToggle = true;
             break;
+        //i
+        case 73:
+            playerInventoryToggle = true;
+            break;
         default:
-            return;
             break;
     }
-    if (window.look.active || lookToggle)
+    if(window.playerInventory.active || playerInventoryToggle)
+    {
+        window.playerInventory.handleInput(e);
+    }
+    else if (window.look.active || lookToggle)
     {
         window.look.move(lookToggle,xChange, yChange);
     }

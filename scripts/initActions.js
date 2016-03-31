@@ -50,6 +50,7 @@ function init() {
         window.structureObjects = json;
     });
     window.log = new messageLog();
+    window.playerInventory = new playerInventory();
     window.player = new actor("@", "green", "You" , 1000, 500, 125, 125);
     window.playerLight = new LightSource(window.player, 20);
     window.map = [];

@@ -63,7 +63,7 @@ function actor(symbol, color, name , hp, baseInit, xPos, yPos){
     this.meleeAttack = function(target){
         if (this.nextTo(target)) {
             var inflictedDamage = getRandomInt(this.weapon.damage.low, this.weapon.damage.high);
-            window.log.logMessage(this.name + " hit " + target.name + " with " + this.weapon.gameId + " for " + inflictedDamage + " damage");
+            window.log.logMessage(this.name + " hit " + target.name + " with " + this.weapon.id + " for " + inflictedDamage + " damage");
             target.takeDamage(inflictedDamage);
         }
     };
