@@ -7,6 +7,7 @@ function actor(symbol, color, name , hp, baseInit, xPos, yPos){
     this.symbol = symbol;
     this.color = color;
     this.name = name;
+    this.id = name;
     this.maxhp = hp;
     this.hp = hp;
     this.baseInit = baseInit;
@@ -17,8 +18,8 @@ function actor(symbol, color, name , hp, baseInit, xPos, yPos){
     this.items = [];
     this.items.push(getObjectById(window.itemObjects, "corpse"));
     this.weapon = getObjectById(window.itemObjects, "fists");
-    this.id = window.idCounter;
-    window.idCounter++;
+    this.gameId = window.gameIdCounter;
+    window.gameIdCounter++;
 
     this.die = function(){
         console.log("window.map STACK LENGTH ON DEATH");
@@ -31,7 +32,7 @@ function actor(symbol, color, name , hp, baseInit, xPos, yPos){
         }
         for(i= 0; i< window.actorList.length; i++)
         {
-            if(window.actorList[i].id == this.id)
+            if(window.actorList[i].gameId == this.gameId)
             {
                 console.log("splicing actor list");
                 console.log(window.actorList.length);
@@ -41,7 +42,7 @@ function actor(symbol, color, name , hp, baseInit, xPos, yPos){
         }
         //for(i=0; i< window.actorList.length; i++)
         //    console.log(actorList[i])
-        window.actorQueue.removeItemByID(this.id);
+        window.actorQueue.removeItemByID(this.gameId);
         //window.map[this.xPos][this.yPos].splice(1,0, this.items);
     };
 
@@ -62,7 +63,7 @@ function actor(symbol, color, name , hp, baseInit, xPos, yPos){
     this.meleeAttack = function(target){
         if (this.nextTo(target)) {
             var inflictedDamage = getRandomInt(this.weapon.damage.low, this.weapon.damage.high);
-            window.log.logMessage(this.name + " hit " + target.name + " with " + this.weapon.id + " for " + inflictedDamage + " damage");
+            window.log.logMessage(this.name + " hit " + target.name + " with " + this.weapon.gameId + " for " + inflictedDamage + " damage");
             target.takeDamage(inflictedDamage);
         }
     };

@@ -153,6 +153,8 @@ function vision(){
             }
             else if(window.map[x][y].lit == false)
             {
+
+
                 if (prevColor != "DarkSlateGray"){
                     if (prevColor != null )
                         buffer+="</div>";
@@ -164,16 +166,24 @@ function vision(){
 
             }
             else if(window.map[x][y].peek().color == prevColor){
+                if(window.map[x][y].lookFlag)
+                    buffer += "<div style='background-color: blue'>";
                 buffer += window.map[x][y].peek().symbol;
             }
             else{
                 if (prevColor != ""){
                     buffer += "</div>";
                 }
-                buffer +=  "<div style=\"display:inline;color:" + window.map[x][y].peek().color + "\">" + window.map[x][y].peek().symbol;
+                buffer +=  "<div style=\"display:inline;color:" + window.map[x][y].peek().color + "\">"
+                if(window.map[x][y].lookFlag)
+                    buffer += "<div style='background-color: blue'>";
+                buffer += window.map[x][y].peek().symbol;
                 prevColor = window.map[x][y].peek().color;
             }
+            if(window.map[x][y].lookFlag)
+                buffer+="</div>";
         }
+
         buffer += "<br>";
 
 

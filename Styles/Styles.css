@@ -126,7 +126,7 @@ ul#messageLog{
     color: red;
 }
 
-div#MessageBox {
+div#lookBox {
     color: white;
     width: 500px;
     height: 215px;
@@ -139,7 +139,7 @@ div#MessageBox {
     display: none;
 }
 
-#MessageBox h1 {
+#lookBox h1 {
 
     padding-bottom: 10px;
 }

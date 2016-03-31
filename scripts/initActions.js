@@ -63,6 +63,7 @@ function init() {
             window.map[i][j] = [];
             window.map[i][j].push(dirt);
             window.map[i][j].lit = false;
+            window.map[i][j].lookFlag = false;
             window.map[i][j].unseen = true;
             window.map[i][j].lastSymbol = null;
             window.map[i][j].cameFrom = null;
@@ -176,5 +177,6 @@ function init() {
         actorQueue.push(actorList[i], actorList[i].initiative);
 
 
+    window.look = new look();
     vision();
 }

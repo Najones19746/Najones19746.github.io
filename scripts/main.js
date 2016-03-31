@@ -16,7 +16,7 @@ function move(e){
 
     var xChange = 0;
     var yChange = 0;
-
+    var lookToggle = false;
 
     switch (keyValue) {
         case 97:
@@ -53,12 +53,21 @@ function move(e){
             xChange += 1;
             yChange += 1;
             break;
+        case 76:
+            lookToggle = true;
+            break;
         default:
             return;
             break;
     }
-    window.player.initiative = window.actorQueue.pop().initiative - 100;
-    window.player.move(xChange,yChange);
+    if (window.look.active || lookToggle)
+    {
+        window.look.move(lookToggle,xChange, yChange);
+    }
+    else {
+        window.player.move(xChange,yChange);
+        window.player.initiative = window.actorQueue.pop().initiative - 100;
+    }
 }
 
 function getObjectById(collection, value){

@@ -84,7 +84,7 @@ function priorityQueue(){
         var lead = this.head;
         if (lead == null)
             return;
-        if(lead.data.id == id)
+        if(lead.data.gameId == id)
         {
             console.log("FOUND AND REMOVED NODE BY ID");
             this.length -= 1;
@@ -97,7 +97,7 @@ function priorityQueue(){
         {
             tail = lead;
             lead = lead.next;
-            if(lead.data.id == id)
+            if(lead.data.gameId == id)
             {
                 console.log("FOUND AND REMOVED NODE BY ID");
                 this.length -= 1;
