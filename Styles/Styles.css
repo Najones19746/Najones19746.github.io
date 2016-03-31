@@ -140,6 +140,10 @@ div#lookBox {
 }
 
 #lookBox h1 {
-
+    font-size: 52px;
     padding-bottom: 10px;
+}
+
+#lookBox p {
+    font-size: 16px;
 }

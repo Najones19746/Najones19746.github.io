@@ -15,6 +15,7 @@ function look() {
             console.log("how about here");
             this.active = true;
             this.boxElement.style.display = "block";
+            this.boxElement.style.fontSize = "72px";
             this.xPos = window.player.xPos;
             this.yPos = window.player.yPos;
             window.map[this.xPos][this.yPos].lookFlag = true;
