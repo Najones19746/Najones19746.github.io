@@ -10,7 +10,8 @@ div{
 
 div#entities{
     display: inline;
-    width: 780px;
+    padding-left: 15%;
+    width: 50%;
     height: 100%;
     float: left;
     background-color:black;
@@ -24,6 +25,7 @@ div#separator{
     color: white;
     width: 22px;
     height: 100%;
+    overflow: hidden;
     word-break: break-all;
     font-family:Lucida Console, monospace;
 }
@@ -128,8 +130,9 @@ ul#messageLog{
 
 div#lookBox {
     color: white;
-    width: 500px;
-    height: 215px;
+    width: 25%;
+    height: 15%;
+    padding-right: 5%;
     display: block;
     z-index: 2;
     position: absolute;
