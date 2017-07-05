@@ -1,9 +1,9 @@
-function dungeonGen(){
+function dungeonGen(numRooms){
     fillMap();
     window.rooms = [];
     //room(leftX, topY, rightX, botY)
     var room1 = new room(115,130,130,115);
-    roomGen(12);
+    roomGen(numRooms);
 
     //var room2 = new room(90,155,110,145);
     //var room3 = new room(145,155,155,140);

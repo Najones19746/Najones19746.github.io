@@ -11,8 +11,8 @@ function heuristic(a, b) {
 }
 
 function reconstructPath(cameFrom, goal, used) {
-    console.log("yaay");
-    console.log(goal);
+    // console.log("yaay");
+    // console.log(goal);
     var path = [];
     var current = goal;
     while (current != cameFrom)
@@ -40,7 +40,7 @@ function findPath(start, end) {
 
     start.gScore = 0;
     start.hScore = heuristic(start,end);
-    console.log(start.hScore);
+    //console.log(start.hScore);
     start.fScore = start.hScore;
 
     var openSet = new priorityQueue();
@@ -63,15 +63,15 @@ function findPath(start, end) {
 
         for (i = 0; i < window.map[current.xPos][current.yPos].neighbors.length; i++)
         {
-            if(current.neighbors[i].xPos == window.player.xPos && current.neighbors[i].yPos == window.player.yPos)
+            /*if(current.neighbors[i].xPos == window.player.xPos && current.neighbors[i].yPos == window.player.yPos)
                 console.log("GOT EMM");
             else
-                console.log("nope..");
+                console.log("nope..");*/
             tenativeGScore = current.gScore + 1;
             if (tenativeGScore < current.neighbors[i].gScore)
             {
                 if(current.neighbors[i].peek().type == "structure"){
-                    console.log("pathfinding blocked");
+                    //console.log("pathfinding blocked");
                     continue;
                 }
 

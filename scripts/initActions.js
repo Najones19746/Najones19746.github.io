@@ -141,7 +141,7 @@ function init() {
         }
     }
 
-    dungeonGen();
+    dungeonGen(12);
 
 
     window.map[window.player.xPos][window.player.yPos].push(window.player);
